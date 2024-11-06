@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - MR Gadgets | Online Store</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/filter.js" defer></script>
 </head>
 <body>
     <header>
@@ -16,26 +15,14 @@
         </nav>
     </header>
     <main>
-        <h2>Products</h2>
-        <div>
-            <h3>Filter by Category</h3>
-            <select id="categoryFilter" onchange="filterProducts()">
-                <option value="">All Categories</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Accessories">Accessories</option>
-            </select>
-
-            <h3>Price Range</h3>
-            <input type="range" id="priceRange" min="0" max="1000" value="1000" onchange="filterProducts()">
-            <span id="priceValue">0 - 1000</span>
-
-            <h3>Sort By</h3>
-            <select id="sortBy" onchange="sortProducts()">
-                <option value="popularity">Sort by Popularity</option>
-                <option value="price">Sort by Price</option>
-            </select>
+        <h2>Our Products</h2>
+        <div id="filters">
+            <!-- Add your filter options here -->
         </div>
-        <div id="productContainer"></div>
+        <div id="productList"></div>
     </main>
+    <script src="js/products.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/displayProducts.js"></script>
 </body>
 </html>
