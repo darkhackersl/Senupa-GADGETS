@@ -67,7 +67,7 @@ const products = [
         category: "Tablets",
         price: 1099.99,
         brand: "Apple",
-        image: "images/products/ipadpro.jpg",
+        image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-select-wifi-spacegray-202104_FMT_WHH?wid=1945&hei=2000&fmt=jpeg&qlt=90&.v=1617126635000",
         description: "Large tablet with M2 chip and mini-LED display.",
         stock: 7
     },
