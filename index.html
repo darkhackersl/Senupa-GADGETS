@@ -17,14 +17,8 @@
                 <a href="login.html">Login</a>
                 <a href="register.html">Register</a>
             </nav>
-            <aside>
-    <h2>Sidebar Title</h2>
-    <nav>
-        <a href="#link1">Link 1</a>
-        <a href="#link2">Link 2</a>
     </nav>
-    <button id="theme-toggle">Toggle Dark Mode</button> <!-- Add here -->
-</aside>
+
           <button id="theme-toggle" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">Toggle Dark Mode</button>
         </div>
     </header>
@@ -33,13 +27,17 @@
             <h2>Welcome to MR Gadgets!</h2>
             <p>Your one-stop shop for the latest electronic items.</p>
         </div>
-    </main>
-    <footer>
-    <div class="container">
-        <p>&copy; 2023 Your Website. All rights reserved.</p>
-        <button id="theme-toggle">Toggle Dark Mode</button> <!-- Add here -->
+        <div id="sidebar" class="sidebar">
+        <div class="menu-label">Menu</div>
+        <button class="btn close-btn" id="close-btn">&times;</button>
+        <a class="btn" data-url="HTML/syllabus.html">Syllabus</a>
+        <a class="btn" data-url="HTML/Lectures.html" id="LectureSideButton">Lectures</a>
+        <a class="btn" data-url="HTML/Labs.html" id="LabsSideButton">Labs</a>
+        <a class="btn" data-url="HTML/Homeworks.html">Homeworks</a>
+        <a class="btn" data-url="HTML/Final_Presentations.html">Presentations</a>
     </div>
-</footer>
+    </main>
+   
     <!-- Add these script tags before the closing </body> tag -->
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app-compat.js"></script>
