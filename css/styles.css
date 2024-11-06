@@ -407,9 +407,7 @@ body {
     color: var(--text-color);
 }
 
-header {
-    background: var(--primary-color);
-}
+
 
 .product-card {
     background-color: var(--white);
