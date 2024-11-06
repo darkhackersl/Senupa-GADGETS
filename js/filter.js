@@ -1,15 +1,23 @@
 // filter.js
 const products = []; // Replace with your products data
 
+// js/filter.js
+
 function filterProducts() {
-    const category = document.getElementById('categoryFilter').value;
-    const priceRange = document.getElementById('priceRange').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priceFilter = parseFloat(document.getElementById('priceFilter').value);
+
     const filteredProducts = products.filter(product => {
-        return (category === "" || product.category === category) &&
-               (product.price <= priceRange);
+        return (categoryFilter === '' || product.category === categoryFilter) &&
+               (isNaN(priceFilter) || product.price <= priceFilter);
     });
+
     displayProducts(filteredProducts);
 }
+
+// Add event listeners to your filter elements
+document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+document.getElementById('priceFilter').addEventListener('input', filterProducts);
 
 function sortProducts() {
     const sortBy = document.getElementById('sortBy').value;
