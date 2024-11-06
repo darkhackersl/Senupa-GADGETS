@@ -262,18 +262,7 @@ footer {
     align-items: center;
     flex-wrap: wrap;
 }
-.footer-section ul {
-    list-style-type: none;
-}
 
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section a {
-    color: #ecf0f1;
-    text-decoration: none;
-}
 
 .footer-nav a {
     color: #ecf0f1;
