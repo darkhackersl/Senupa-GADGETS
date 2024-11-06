@@ -7,7 +7,7 @@ const products = [
         category: "Smartphones",
         price: 999.99,
         brand: "Apple",
-        image: "images/products/iphone14pro.jpg",
+        image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
         description: "Latest iPhone with dynamic island and pro camera system.",
         stock: 10
     },
@@ -17,7 +17,7 @@ const products = [
         category: "Smartphones",
         price: 1199.99,
         brand: "Samsung",
-        image: "images/products/s23ultra.jpg",
+        image: "https://images.samsung.com/us/smartphones/galaxy-s23-ultra/images/galaxy-s23-ultra-highlights-kv.jpg",
         description: "Premium Android smartphone with S Pen functionality.",
         stock: 8
     },
@@ -27,7 +27,7 @@ const products = [
         category: "Laptops",
         price: 1999.99,
         brand: "Apple",
-        image: "images/products/macbookpro.jpg",
+        image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp-14-spacegray-select-202301?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1671304673229",
         description: "Powerful laptop with M2 Pro chip for professionals.",
         stock: 5
     },
@@ -37,7 +37,7 @@ const products = [
         category: "Laptops",
         price: 1799.99,
         brand: "Dell",
-        image: "images/products/dellxps.jpg",
+        image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9520/media-gallery/black/notebook-xps-15-9520-t-black-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,0&resMode=sharp2&size=402,402",
         description: "Premium Windows laptop with 4K OLED display.",
         stock: 6
     },
@@ -47,7 +47,7 @@ const products = [
         category: "Audio",
         price: 249.99,
         brand: "Apple",
-        image: "images/products/airpodspro.jpg",
+        image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1660803972361",
         description: "Wireless earbuds with active noise cancellation.",
         stock: 15
     },
@@ -57,7 +57,7 @@ const products = [
         category: "Audio",
         price: 349.99,
         brand: "Sony",
-        image: "images/products/sonywh1000xm4.jpg",
+        image: "https://electronics.sony.com/image/5d02da5c70a68500c8f18805dd85106f/1686x950/Sony_WH-1000XM4_Black_hero.png",
         description: "Premium wireless headphones with industry-leading noise cancellation.",
         stock: 12
     },
@@ -77,7 +77,7 @@ const products = [
         category: "Gaming",
         price: 499.99,
         brand: "Sony",
-        image: "images/products/ps5.jpg",
+        image: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21",
         description: "Next-gen gaming console with 4K gaming capabilities.",
         stock: 4
     }
