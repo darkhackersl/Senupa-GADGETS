@@ -66,10 +66,13 @@ function updateCartDisplay() {
         cartContainer.appendChild(cartItem);
     });
 
-   // Redirect to checkout page
-function proceedToCheckout() {
-    window.location.href = "checkout.html";
+ // Add the checkout button at the end of the cart items
+    const checkoutButton = document.checkoutButton class="add-to-cart">Proceed to Checkout</button>
+    checkoutButton.textContent = "Proceed to Checkout";
+    checkoutButton.onclick = () => window.location.href = "checkout.html";
+    checkoutButton.className = 'checkout-button'; // Optionally, add a class for styling
     cartContainer.appendChild(checkoutButton);
+     <button id="checkoutButton" class="add-to-cart">Proceed to Checkout</button>
 
     updateCartSummary();
 }
@@ -87,6 +90,10 @@ function updateCartSummary() {
     document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
     document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
     document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
+}
+    // Redirect to checkout page
+function proceedToCheckout() {
+    window.location.href = "checkout.html";
 }
 
 // Initialize cart display when the page loads
