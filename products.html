@@ -17,14 +17,16 @@
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
             <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
             <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-            <!-- Add this user info container -->
-            <div id="userInfoContainer" class="user-info-container">
-                <span id="userNameDisplay"></span>
-                <span id="userEmailDisplay"></span>
+            <!-- User info container -->
+            <div class="user-section">
+                <div id="userInfo" style="display: none;">
+                    <span id="welcomeMessage"></span>
+                    <span id="userEmail"></span>
+                </div>
+                <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+                <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
-            <a href="login.html" id="loginLink"><i class="fas fa-user"></i> Login</a>
-            <a href="register.html" id="registerLink"><i class="fas fa-user-plus"></i> Register</a>
-            <a href="#" id="logoutLink" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </div>
 </header>
