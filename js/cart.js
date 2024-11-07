@@ -67,8 +67,7 @@ function updateCartDisplay() {
     });
 
     // Add a checkout button
-    const checkoutButton = document.createElement('button');
-    checkoutButton.textContent = "Proceed to Checkout";
+
     checkoutButton.onclick = () => window.location.href = "checkout.html";
     cartContainer.appendChild(checkoutButton);
 
