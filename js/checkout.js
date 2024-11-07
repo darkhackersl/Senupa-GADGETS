@@ -1,10 +1,9 @@
 // checkout.js
-// checkout.js
 document.addEventListener("DOMContentLoaded", () => {
     updateCartSummary();
 
     const checkoutForm = document.getElementById("checkoutForm");
-    checkoutForm.addEventListener("submit", async function(event) {
+    checkoutForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
         // Collect user information
@@ -12,8 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             customerInfo: {
                 name: document.getElementById("name").value,
                 address: document.getElementById("address").value,
-                phone: document.getElementById("phone").value,
-                email: document.getElementById("email").value
+                phone: document.getElementById("phone").value
             },
             items: cart,
             totalAmount: parseFloat(document.getElementById("finalTotal").textContent),
@@ -33,12 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
             cart = [];
             updateCartSummary();
 
-            // Send confirmation email (if you have email service)
-            await sendOrderConfirmationEmail(order);
-
-            // Redirect to order confirmation page
+            // Redirect to order confirmation page after a short delay
             setTimeout(() => {
-                window.location.href = `order-confirmation.html?orderId=${order.orderId}`;
+                window.location.href = `index.html`;
             }, 2000);
 
         } catch (error) {
@@ -70,4 +65,19 @@ function showErrorMessage(message) {
         </div>
     `;
     orderMessage.classList.add("error");
+}
+
+function updateCartSummary() {
+    // Get cart from localStorage
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const total = subtotal + shipping;
+
+    document.getElementById('totalItems').textContent = totalItems;
+    document.getElementById('totalPrice').textContent = subtotal.toFixed(2);
+    document.getElementById('shippingCost').textContent = shipping.toFixed(2);
+    document.getElementById('finalTotal').textContent = total.toFixed(2);
 }
