@@ -1,4 +1,6 @@
-// js/cart.js
+// Constants for shipping
+const SHIPPING_COST = 5.99;  // Flat shipping fee
+const FREE_SHIPPING_THRESHOLD = 50.00;  // Minimum cart total for free shipping
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -45,6 +47,7 @@ function updateCartDisplay() {
 
     if (cart.length === 0) {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+        updateCartSummary();  // Update summary when cart is empty
         return;
     }
 
@@ -70,10 +73,16 @@ function updateCartSummary() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
+    // Determine shipping cost based on cart total
+    const shippingCost = totalPrice >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const finalTotal = totalPrice + shippingCost;
+
     document.getElementById('totalItems').textContent = totalItems;
     document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
+    document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
 }
-
 
 // Initialize cart display when the page loads
 document.addEventListener('DOMContentLoaded', updateCartDisplay);
+
