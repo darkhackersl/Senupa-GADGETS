@@ -336,6 +336,28 @@ h2 {
     margin-bottom: 1rem;
 }
 
+/* Add to your styles.css */
+.form-container button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.error-message {
+    color: red;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.success-message {
+    color: green;
+    margin: 10px 0;
+    font-size: 14px;
+}
 /* Add to Cart Button Styles */
 /* Enhanced Button Styles */
 .add-to-cart {
