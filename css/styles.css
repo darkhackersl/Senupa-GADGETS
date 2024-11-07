@@ -936,3 +936,27 @@ h2 {
         font-size: 1rem;
     }
 }
+/* Add these to your CSS file */
+
+/* Checkout button click animation */
+.checkout-button.clicked {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Disabled state */
+.checkout-button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    transform: none;
+}
