@@ -2,6 +2,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     
+// login.js
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -15,12 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                
                 if (!user.emailVerified) {
                     alert('Please verify your email before logging in.');
                     submitButton.disabled = false;
                     submitButton.textContent = 'Login';
                     return firebase.auth().signOut();
                 }
+
+                // Redirect to home page after successful login
                 window.location.href = 'index.html';
             })
             .catch((error) => {
