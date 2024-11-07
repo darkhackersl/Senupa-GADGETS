@@ -39,15 +39,40 @@ function logout() {
         });
 }
 
-// Listen for auth state changes
+// auth.js
 firebase.auth().onAuthStateChanged((user) => {
-    updateNavigation();
-    
-    // Protect certain pages
-    const protectedPages = ['cart.html', 'profile.html'];
-    const currentPage = window.location.pathname.split('/').pop();
-    
-    if (!user && protectedPages.includes(currentPage)) {
-        window.location.href = 'login.html';
+    if (user) {
+        // User is signed in
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userId', user.uid);
+        
+        // Update UI for logged in user
+        const loginLinks = document.querySelectorAll('a[href="login.html"]');
+        const registerLinks = document.querySelectorAll('a[href="register.html"]');
+        
+        loginLinks.forEach(link => {
+            link.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+            link.href = '#';
+            link.onclick = (e) => {
+                e.preventDefault();
+                firebase.auth().signOut()
+                    .then(() => {
+                        localStorage.removeItem('userEmail');
+                        localStorage.removeItem('userId');
+                        window.location.href = 'index.html';
+                    })
+                    .catch((error) => {
+                        console.error('Logout error:', error);
+                    });
+            };
+        });
+        
+        registerLinks.forEach(link => {
+            link.style.display = 'none';
+        });
+    } else {
+        // User is signed out
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
     }
 });
