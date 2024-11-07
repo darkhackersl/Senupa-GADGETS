@@ -13,26 +13,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
-              <nav class="scroll-menu">
+ <header>
+    <div class="container">
+        <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+        <nav class="scroll-menu">
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
             <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
             <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-            <a href="track-order.html"><i class="fas fa-truck"></i> Track</a>
-             <div id="userInfo" class="user-info" style="display: none;">
-                <span id="userName"></span>
-                <span id="userEmail"></span>
+            <!-- Add this div for user info -->
+            <div id="userInfo" style="display: none;" class="user-display">
+                <p>Welcome, <span id="displayName"></span></p>
+                <p><span id="displayEmail"></span></p>
             </div>
-            <a href="login.html" id="loginLink"><i class="fas fa-user"></i> Login</a>
-            <a href="register.html" id="registerLink"><i class="fas fa-user-plus"></i> Register</a>
+            <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+            <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
             <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
-
         </nav>
-        </div>
-      
-    </header>
+    </div>
+</header>
     <main>
         
         <div class="container">
