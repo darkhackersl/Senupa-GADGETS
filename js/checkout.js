@@ -114,6 +114,23 @@ function setupCheckoutForm() {
         }
     });
 }
+// Add this function in checkout.js
+function showOrderConfirmation(order) {
+    const messageDiv = document.getElementById('orderMessage');
+    if (!messageDiv) return;
+
+    messageDiv.innerHTML = `
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <h3>Order Placed Successfully!</h3>
+            <p>Order ID: ${order.orderId}</p>
+            <p>Thank you for your order, ${order.customerInfo.name}!</p>
+            <p>We've sent a confirmation email to ${order.customerInfo.email}.</p>
+            <p>You will be redirected to the homepage shortly.</p>
+        </div>
+    `;
+    messageDiv.classList.add('show');
+}
 
 async function sendOrderConfirmationEmail(order) {
     const itemsList = order.items.map(item => 
