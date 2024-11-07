@@ -81,6 +81,25 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shipping.toFixed(2);
     document.getElementById('finalTotal').textContent = total.toFixed(2);
 }
+// Add this to show loading and success/error states
+async function handleOrderSubmission(orderData) {
+    const submitButton = document.querySelector('#checkoutForm button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.innerHTML = 'Processing...';
+
+    try {
+        const order = orderManager.placeOrder(orderData);
+        await sendOrderConfirmationEmail(order);
+        
+        showSuccessMessage('Order placed and confirmation email sent!');
+        // Clear cart and redirect
+    } catch (error) {
+        showErrorMessage('Order placed but email could not be sent. Please check your email address.');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Place Order';
+    }
+}
 // checkout.js
 
 // Initialize EmailJS
