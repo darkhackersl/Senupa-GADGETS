@@ -36,12 +36,12 @@ function removeFromCart(productId) {
 }
 
 function updateLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function updateCartDisplay() {
     const cartContainer = document.getElementById('cartContainer');
-    if (!cartContainer) return;
+    const checkoutButton = document.getElementById('checkoutButton'); // Reference to existing button
+}
+    if (!cartContainer || !checkoutButton) {
+        console.error("Cart container or checkout button not found in HTML.");
+        return;
 
     cartContainer.innerHTML = '';
 
@@ -66,15 +66,17 @@ function updateCartDisplay() {
         cartContainer.appendChild(cartItem);
     });
 
- // Add the checkout button at the end of the cart items
-    const checkoutButton = document.checkoutButton class="add-to-cart">Proceed to Checkout</button>
-    checkoutButton.textContent = "Proceed to Checkout";
-    checkoutButton.onclick = () => window.location.href = "checkout.html";
-    checkoutButton.className = 'checkout-button'; // Optionally, add a class for styling
-    cartContainer.appendChild(checkoutButton);
-     <button id="checkoutButton" class="add-to-cart">Proceed to Checkout</button>
+ 
 
     updateCartSummary();
+
+    // Display the existing checkout button if there are items in the cart
+    checkoutButton.style.display = 'block';
+}
+
+// Redirect to checkout page
+function proceedToCheckout() {
+    window.location.href = "checkout.html";
 }
 
 
