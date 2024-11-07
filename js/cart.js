@@ -108,6 +108,42 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shipping.toFixed(2);
     document.getElementById('finalTotal').textContent = total.toFixed(2);
 }
+// Add this to your cart.js file
+
+function initializeCheckoutButton() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function() {
+            if (cart.length === 0) {
+                alert('Your cart is empty! Please add items before proceeding.');
+                return;
+            }
+            
+            // Add animation class when clicked
+            this.classList.add('clicked');
+            
+            // Proceed to checkout after brief delay
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 300);
+        });
+    }
+}
+
+// Add this to your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartDisplay();
+    initializeCheckoutButton();
+});
+
+// Optional: Add a loading animation when proceeding to checkout
+function showCheckoutLoading() {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        checkoutBtn.disabled = true;
+    }
+}
 
 // Proceed to checkout
 function proceedToCheckout() {
