@@ -1,4 +1,5 @@
 // checkout.js
+// checkout.js
 document.addEventListener("DOMContentLoaded", () => {
     updateCartSummary();
 
@@ -70,9 +71,3 @@ function showErrorMessage(message) {
     `;
     orderMessage.classList.add("error");
 }
-        // Optionally, redirect to a thank-you page or back to the homepage
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 3000);
-    });
-});
