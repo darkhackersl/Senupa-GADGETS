@@ -49,3 +49,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 });
+// Add this to login.js
+document.getElementById('resendVerificationBtn')?.addEventListener('click', function() {
+    const email = document.getElementById('email').value;
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            return userCredential.user.sendEmailVerification({
+                url: 'https://scintillating-gnome-48c89a.netlify.app/login',
+                handleCodeInApp: true
+            });
+        })
+        .then(() => {
+            alert('Verification email has been resent. Please check your inbox.');
+        })
+        .catch((error) => {
+            console.error('Error sending verification email:', error);
+            alert(error.message);
+        });
+});
