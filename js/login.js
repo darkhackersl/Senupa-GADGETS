@@ -8,12 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        if (!email || !password) {
-            alert('Please fill in all fields');
-            return;
-        }
-
-        // Show loading state
         const submitButton = this.querySelector('button');
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
@@ -21,24 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                
                 if (!user.emailVerified) {
-                    // If email isn't verified, send a new verification email
-                    user.sendEmailVerification({
-                        url: 'https://scintillating-gnome-48c89a.netlify.app/login',
-                        handleCodeInApp: true
-                    }).then(() => {
-                        alert('Please verify your email. A new verification link has been sent.');
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Login';
-                        firebase.auth().signOut();
-                    });
-                    throw new Error('Please verify your email before logging in.');
+                    alert('Please verify your email before logging in.');
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Login';
+                    return firebase.auth().signOut();
                 }
-
-                // Email is verified, proceed with login
-                localStorage.setItem('userEmail', user.email);
-                localStorage.setItem('userId', user.uid);
                 window.location.href = 'index.html';
             })
             .catch((error) => {
