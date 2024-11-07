@@ -23,19 +23,83 @@ body {
     padding: 0 20px;
 }
 
-/* Default styles for header */
-.header {
-    font-size: 24px; /* Default size for larger screens */
-    padding: 20px;   /* Default padding */
+
+/* Enhanced Header Styles */
+header {
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    color: #ecf0f1;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Styles for mobile devices */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 0.8rem 1.2rem;
+    margin-left: 0.8rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+nav a.active {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.search-bar {
+    display: flex;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+#search-input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+}
+
+#search-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-    .header {
-        font-size: 18px; /* Smaller font size for mobile */
-        padding: 10px;   /* Reduced padding for mobile */
-    }
-    
     header .container {
         flex-direction: column;
         align-items: center;
@@ -55,26 +119,6 @@ body {
     .search-bar {
         width: 100%;
         margin: 1rem 0;
-    }
-
-    #productList {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-}
-/* Responsive navigation */
-@media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav {
-        margin-top: 1rem;
-    }
-
-    nav a {
-        display: inline-block;
-        margin: 0.5rem;
     }
 }
 
@@ -247,18 +291,8 @@ h2 {
 .add-to-cart.added::before {
     content: "\f00c";
 }
-#theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-left: 1rem;
-}
-.search-bar {
-    display: flex;
-    margin-left: auto;
-    margin-right: 1rem;
-}
+
+
 
 #search-input {
     padding: 0.5rem;
@@ -273,11 +307,6 @@ h2 {
     padding: 0.5rem 1rem;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
-}
-.search-bar {
-    display: flex;
-    margin-left: auto;
-    margin-right: 1rem;
 }
 
 #search-input {
