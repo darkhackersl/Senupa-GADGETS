@@ -41,63 +41,55 @@ function logout() {
 
 // auth.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Get UI elements
+    // Get elements
     const userInfo = document.getElementById('userInfo');
-    const userName = document.getElementById('userName');
-    const userEmail = document.getElementById('userEmail');
-    const loginLink = document.getElementById('loginLink');
-    const registerLink = document.getElementById('registerLink');
+    const displayName = document.getElementById('displayName');
+    const displayEmail = document.getElementById('displayEmail');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // Function to update UI based on auth state
-    function updateUI(user) {
+    // Check if user is logged in
+    firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            // User is signed in
-            if (userInfo) userInfo.style.display = 'inline-flex';
-            if (loginLink) loginLink.style.display = 'none';
-            if (registerLink) registerLink.style.display = 'none';
-            if (logoutBtn) logoutBtn.style.display = 'inline-block';
-
             // Get user data from Firestore
             firebase.firestore().collection('users').doc(user.uid).get()
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        if (userName) userName.textContent = userData.username || 'User';
-                        if (userEmail) userEmail.textContent = user.email;
+                        
+                        // Show user info
+                        userInfo.style.display = 'inline-block';
+                        displayName.textContent = userData.username;
+                        displayEmail.textContent = user.email;
+                        
+                        // Hide login/register, show logout
+                        loginBtn.style.display = 'none';
+                        registerBtn.style.display = 'none';
+                        logoutBtn.style.display = 'inline-block';
                     }
                 })
                 .catch((error) => {
                     console.error("Error getting user data:", error);
                 });
         } else {
-            // User is signed out
-            if (userInfo) userInfo.style.display = 'none';
-            if (loginLink) loginLink.style.display = 'inline-block';
-            if (registerLink) registerLink.style.display = 'inline-block';
-            if (logoutBtn) logoutBtn.style.display = 'none';
+            // User is logged out
+            userInfo.style.display = 'none';
+            loginBtn.style.display = 'inline-block';
+            registerBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
         }
-    }
-
-    // Listen for auth state changes
-    firebase.auth().onAuthStateChanged((user) => {
-        updateUI(user);
     });
 
-    // Handle logout
+    // Logout functionality
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
+        logoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
             firebase.auth().signOut().then(() => {
-                // Clear any stored user data
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userId');
                 window.location.href = 'login.html';
             }).catch((error) => {
                 console.error('Logout error:', error);
-                alert('Error logging out: ' + error.message);
             });
         });
     }
 });
-
