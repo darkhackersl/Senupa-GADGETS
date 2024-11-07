@@ -94,17 +94,17 @@ function setupCheckoutForm() {
                 // Continue with order process even if email fails
             }
 
+            // Show order confirmation to customer
+            showOrderConfirmation(order);
+
             // Clear cart
             localStorage.removeItem('cart');
             cart = [];
 
-            // Show success message
-            showSuccessMessage('Order placed successfully! Redirecting to home page...');
-
             // Redirect after delay
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 2000);
+            }, 5000); // Increased to 5 seconds to give customer time to read the message
 
         } catch (error) {
             console.error('Order processing failed:', error);
