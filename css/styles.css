@@ -865,4 +865,42 @@ h2 {
         transform: translateX(0);
         opacity: 1;
     }
+.checkout-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #2980b9;
+}
+
+.checkout-button i {
+    margin-right: 8px;
+}
+
+#cartSummary {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#cartSummary p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+#cartSummary strong {
+    color: #2c3e50;
+}
 
