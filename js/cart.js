@@ -108,51 +108,73 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shipping.toFixed(2);
     document.getElementById('finalTotal').textContent = total.toFixed(2);
 }
-// Add this to your cart.js file
 
 function initializeCheckoutButton() {
     const checkoutBtn = document.getElementById('checkout-btn');
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', function() {
-            if (cart.length === 0) {
-                alert('Your cart is empty! Please add items before proceeding.');
-                return;
-            }
+    if (!checkoutBtn) return;
+
+    checkoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Check if cart is empty
+        if (cart.length === 0) {
+            alert('Your cart is empty! Please add items before proceeding.');
+            this.classList.add('disabled');
+            return;
+        }
+
+        // Add click animation
+        this.classList.add('clicked');
+        
+        // Add loading state
+        this.classList.add('loading');
+        this.innerHTML = `
+            <span class="button-content">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span class="button-text">Processing...</span>
+            </span>
+        `;
+
+        // Simulate processing
+        setTimeout(() => {
+            // Remove loading state
+            this.classList.remove('loading');
+            this.classList.remove('clicked');
             
-            // Add animation class when clicked
-            this.classList.add('clicked');
-            
-            // Proceed to checkout after brief delay
+            // Add success state
+            this.classList.add('success');
+            this.innerHTML = `
+                <span class="button-content">
+                    <i class="fas fa-check"></i>
+                    <span class="button-text">Proceeding to Checkout...</span>
+                </span>
+            `;
+
+            // Redirect to checkout page
             setTimeout(() => {
                 window.location.href = 'checkout.html';
-            }, 300);
-        });
-    }
+            }, 500);
+        }, 1000);
+    });
+
+    // Update button state based on cart
+    updateCheckoutButtonState();
 }
 
-// Add this to your DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
-    updateCartDisplay();
-    initializeCheckoutButton();
-});
-
-// Optional: Add a loading animation when proceeding to checkout
-function showCheckoutLoading() {
+function updateCheckoutButtonState() {
     const checkoutBtn = document.getElementById('checkout-btn');
-    if (checkoutBtn) {
-        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        checkoutBtn.disabled = true;
+    if (!checkoutBtn) return;
+
+    if (cart.length === 0) {
+        checkoutBtn.classList.add('disabled');
+        checkoutBtn.setAttribute('disabled', 'disabled');
+    } else { checkoutBtn.classList.remove('disabled');
+        checkoutBtn.removeAttribute('disabled');
     }
 }
 
-// Proceed to checkout
-function proceedToCheckout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    window.location.href = 'checkout.html';
-}
+// Initialize the checkout button when the page loads
+document.addEventListener('DOMContentLoaded', initializeCheckoutButton);
 
 // Initialize cart display when page loads
 document.addEventListener('DOMContentLoaded', () => {
