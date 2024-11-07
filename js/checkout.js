@@ -102,6 +102,8 @@ async function handleOrderSubmission(orderData) {
 }
 // checkout.js
 
+// checkout.js
+
 // Initialize EmailJS
 (function() {
     emailjs.init("FfaX8DQ1nRiTBL-gs"); // Add your EmailJS public key here
@@ -189,3 +191,4 @@ async function sendOrderConfirmationEmail(order) {
         throw error;
     }
 }
+
