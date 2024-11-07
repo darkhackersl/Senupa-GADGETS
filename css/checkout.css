@@ -9,6 +9,7 @@
 /* General Layout */
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -20,33 +21,36 @@ h2 {
     text-align: center;
     color: #333;
     margin-bottom: 20px;
+    font-size: 2rem;
 }
 
 /* Checkout Container */
 #checkoutContainer {
     background-color: #fff;
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
     width: 100%;
 }
 
 /* Cart Summary */
 #cartSummary {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
     padding-bottom: 20px;
 }
 
 #cartSummary p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #555;
-    margin: 5px 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 #cartSummary p strong {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #333;
 }
 
@@ -57,89 +61,133 @@ h2 {
 }
 
 #checkoutForm h3 {
-    margin-top: 20px;
+    margin: 20px 0 15px;
     color: #333;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
 label {
-    font-size: 0.9rem;
-    color: #333;
+    font-size: 1rem;
+    color: #555;
     margin: 10px 0 5px;
 }
 
 input[type="text"] {
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     margin-bottom: 15px;
+    transition: border-color 0.3s ease;
 }
 
 input[type="text"]:focus {
     border-color: #333;
     outline: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 /* Payment Info */
 #checkoutForm p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #555;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
 /* Place Order Button */
 button[type="submit"] {
     background-color: #333;
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    padding: 12px;
+    padding: 15px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 button[type="submit"]:hover {
     background-color: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
 }
 
 /* Order Message */
 #orderMessage {
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-align: center;
     margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#orderMessage.success {
+    color: #2ecc71;
+    background-color: #efffef;
+}
+
+#orderMessage.error {
+    color: #e74c3c;
+    background-color: #fff2f0;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     #checkoutContainer {
         padding: 20px;
+        margin: 10px;
     }
 
-    #cartSummary p, #checkoutForm h3, label {
-        font-size: 0.9rem;
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    #checkoutForm h3 {
+        font-size: 1.2rem;
+    }
+
+    input[type="text"] {
+        padding: 10px;
     }
 
     button[type="submit"] {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+        padding: 12px;
     }
 }
-.checkout-button {
-    background-color: #333;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s;
+
+/* Additional Styling for Better UX */
+::placeholder {
+    color: #999;
+    opacity: 0.8;
 }
 
-.checkout-button:hover {
-    background-color: #555;
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
+.required::after {
+    content: "*";
+    color: #e74c3c;
+    margin-left: 4px;
+}
+
+/* Animation for form submission */
+@keyframes submitPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+button[type="submit"].submitting {
+    animation: submitPulse 1.5s infinite; }
