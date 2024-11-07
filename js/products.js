@@ -82,3 +82,29 @@ const products = [
         stock: 4
     }
 ];
+function displayProducts() {
+    const productList = document.getElementById('productList');
+    if (!productList) return;
+
+    productList.innerHTML = '';
+    
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p class="price">$${product.price.toFixed(2)}</p>
+                <p>${product.description}</p>
+                <button onclick="addToCart(${product.id})" class="add-to-cart">
+                    Add to Cart
+                </button>
+            </div>
+        `;
+        productList.appendChild(productCard);
+    });
+}
+
+// Initialize products when page loads
+document.addEventListener('DOMContentLoaded', displayProducts);
