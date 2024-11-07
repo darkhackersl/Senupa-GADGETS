@@ -21,3 +21,13 @@ const actionCodeSettings = {
 };
 
 const auth = firebase.auth();
+// In your firebase-config.js
+firebase.auth().onAuthStateChanged((user) => {
+  if (user && !user.emailVerified) {
+    user.sendEmailVerification().then(() => {
+      console.log("Verification email sent to", user.email);
+    }).catch((error) => {
+      console.error("Error sending verification email:", error);
+    });
+  }
+});
