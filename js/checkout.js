@@ -139,7 +139,7 @@ async function sendOrderConfirmationEmail(order) {
 
     const templateParams = {
         to_name: "MR Gadgets", // Change this to your name or "Admin"
-        to_email: "thenulapanapiti219@gmail.com", // Change this to your email address
+        to_email: "avanthiliyanage16@gmail.com", // Change this to your email address
         customer_name: order.customerInfo.name,
         customer_email: order.customerInfo.email,
         order_id: order.orderId,
