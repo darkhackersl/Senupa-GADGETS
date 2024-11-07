@@ -95,6 +95,164 @@ input[type="text"]:focus {
     color: #555;
     margin: 10px 0;
 }
+/* Checkout Button Styles */
+.checkout-button {
+    display: block;
+    width: 100%;
+    padding: 20px 30px;
+    margin-top: 30px;
+    background: linear-gradient(135deg, #333 0%, #555 100%);
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.checkout-button .button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.checkout-button i {
+    font-size: 1.6rem;
+    transition: transform 0.3s ease;
+}
+
+.checkout-button .button-text {
+    font-family: Arial, sans-serif;
+}
+
+.checkout-button:hover {
+    background: linear-gradient(135deg, #444 0%, #666 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.checkout-button:hover i {
+    transform: translateX(-5px);
+}
+
+.checkout-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* Cart Summary Container */
+#cartSummary {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+#cartSummary p {
+    margin: 15px 0;
+    font-size: 1.2rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cartSummary strong {
+    color: #000;
+    font-size: 1.3rem;
+}
+
+/* Animation for empty cart */
+.checkout-button.disabled {
+    background: #999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading animation */
+@keyframes buttonLoading {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.checkout-button.loading {
+    background: linear-gradient(270deg, #333, #555, #333);
+    background-size: 200% 200%;
+    animation: buttonLoading 2s ease infinite;
+}
+
+/* Click effect */
+.checkout-button.clicked {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .checkout-button {
+        padding: 15px 25px;
+        font-size: 1.2rem;
+    }
+
+    .checkout-button i {
+        font-size: 1.3rem;
+    }
+
+    #cartSummary {
+        padding: 20px;
+    }
+
+    #cartSummary p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Hover effect */
+.checkout-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.checkout-button:hover::before {
+    left: 100%;
+}
+
+/* Empty cart state */
+.checkout-button[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Success state */
+.checkout-button.success {
+    background: #2ecc71;
+}
+
+/* Error state */
+.checkout-button.error {
+    background: #e74c3c;
+}
 
 /* Place Order Button */
 button[type="submit"] {
@@ -191,3 +349,5 @@ input:-webkit-autofill {
 
 button[type="submit"].submitting {
     animation: submitPulse 1.5s infinite; }
+
+
