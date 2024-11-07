@@ -42,61 +42,61 @@ function logout() {
 // auth.js
 document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
-    const userInfoContainer = document.getElementById('userInfoContainer');
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    const userEmailDisplay = document.getElementById('userEmailDisplay');
-    const loginLink = document.getElementById('loginLink');
-    const registerLink = document.getElementById('registerLink');
-    const logoutLink = document.getElementById('logoutLink');
+    const userInfo = document.getElementById('userInfo');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const userEmailDisplay = document.getElementById('userEmail');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     // Check authentication state
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log('User is logged in:', user.email); // Debug log
+            // User is logged in
+            console.log('User logged in:', user.email);
             
             // Get user data from Firestore
             firebase.firestore().collection('users').doc(user.uid).get()
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        console.log('User data:', userData); // Debug log
-
-                        // Update display
-                        userInfoContainer.style.display = 'inline-block';
-                        userNameDisplay.textContent = `Welcome, ${userData.username}`;
+                        
+                        // Show user info
+                        userInfo.style.display = 'block';
+                        welcomeMessage.textContent = `Welcome, ${userData.username}!`;
                         userEmailDisplay.textContent = user.email;
                         
-                        // Update navigation links
-                        if (loginLink) loginLink.style.display = 'none';
-                        if (registerLink) registerLink.style.display = 'none';
-                        if (logoutLink) logoutLink.style.display = 'inline-block';
+                        // Update navigation buttons
+                        loginBtn.style.display = 'none';
+                        registerBtn.style.display = 'none';
+                        logoutBtn.style.display = 'inline-block';
                     }
                 })
                 .catch((error) => {
                     console.error("Error getting user data:", error);
                 });
         } else {
-            console.log('No user logged in'); // Debug log
-            
-            // Reset display for logged out state
-            if (userInfoContainer) userInfoContainer.style.display = 'none';
-            if (loginLink) loginLink.style.display = 'inline-block';
-            if (registerLink) registerLink.style.display = 'inline-block';
-            if (logoutLink) logoutLink.style.display = 'none';
+            // User is logged out
+            userInfo.style.display = 'none';
+            loginBtn.style.display = 'inline-block';
+            registerBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
         }
     });
 
     // Handle logout
-    if (logoutLink) {
-        logoutLink.addEventListener('click', function(e) {
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            
             firebase.auth().signOut()
                 .then(() => {
-                    console.log('User signed out successfully'); // Debug log
+                    console.log('User signed out successfully');
                     window.location.href = 'login.html';
                 })
                 .catch((error) => {
                     console.error('Logout error:', error);
+                    alert('Error signing out: ' + error.message);
                 });
         });
     }
