@@ -1,50 +1,132 @@
-// checkout.js
-document.addEventListener("DOMContentLoaded", () => {
-    updateCartSummary();
+// Constants
+const SHIPPING_COST = 5.99;
+const FREE_SHIPPING_THRESHOLD = 50.00;
 
-    const checkoutForm = document.getElementById("checkoutForm");
-    checkoutForm.addEventListener("submit", function(event) {
-        event.preventDefault();
+// Initialize EmailJS
+(function() {
+    emailjs.init("FfaX8DQ1nRiTBL-gs");
+})();
 
-        // Collect user information
-        const orderData = {
-            customerInfo: {
-                name: document.getElementById("name").value,
-                address: document.getElementById("address").value,
-                phone: document.getElementById("phone").value
-            },
-            items: cart,
-            totalAmount: parseFloat(document.getElementById("finalTotal").textContent),
-            shippingCost: parseFloat(document.getElementById("shippingCost").textContent),
-            paymentMethod: "Cash on Delivery"
+// Get cart from localStorage or initialize empty array
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+class OrderManager {
+    constructor() {
+        this.orders = JSON.parse(localStorage.getItem('orders')) || [];
+        this.currentOrderId = parseInt(localStorage.getItem('lastOrderId') || '0');
+    }
+
+    generateOrderId() {
+        this.currentOrderId += 1;
+        localStorage.setItem('lastOrderId', this.currentOrderId);
+        return `ORD${String(this.currentOrderId).padStart(6, '0')}`;
+    }
+
+    placeOrder(orderData) {
+        const order = {
+            orderId: this.generateOrderId(),
+            orderDate: new Date().toISOString(),
+            status: 'Pending',
+            ...orderData
         };
 
+        this.orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(this.orders));
+        return order;
+    }
+}
+
+// Create a single instance of OrderManager
+const orderManager = new OrderManager();
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartSummary();
+    setupCheckoutForm();
+});
+
+function setupCheckoutForm() {
+    const checkoutForm = document.getElementById("checkoutForm");
+    if (!checkoutForm) return;
+
+    checkoutForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
         try {
-            // Place the order
+            const orderData = {
+                customerInfo: {
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    address: document.getElementById("address").value,
+                    phone: document.getElementById("phone").value
+                },
+                items: cart,
+                totalAmount: parseFloat(document.getElementById("finalTotal").textContent),
+                shippingCost: parseFloat(document.getElementById("shippingCost").textContent),
+                paymentMethod: "Cash on Delivery"
+            };
+
             const order = orderManager.placeOrder(orderData);
             
+            // Send confirmation email
+            try {
+                await sendOrderConfirmationEmail(order);
+                console.log('Email sent successfully');
+            } catch (emailError) {
+                console.error('Email sending failed:', emailError);
+                // Continue with order process even if email fails
+            }
+
             // Show success message
             showOrderConfirmation(order);
 
-            // Clear the cart
+            // Clear cart
             localStorage.removeItem('cart');
             cart = [];
-            updateCartSummary();
 
-            // Redirect to order confirmation page after a short delay
+            // Redirect after delay
             setTimeout(() => {
-                window.location.href = `index.html`;
+                window.location.href = 'index.html';
             }, 2000);
 
         } catch (error) {
-            console.error('Error placing order:', error);
+            console.error('Order placement failed:', error);
             showErrorMessage("There was an error placing your order. Please try again.");
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Place Order';
         }
     });
-});
+}
+
+function updateCartSummary() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const total = subtotal + shipping;
+
+    // Update DOM elements if they exist
+    const elements = {
+        'totalItems': totalItems,
+        'totalPrice': subtotal.toFixed(2),
+        'shippingCost': shipping.toFixed(2),
+        'finalTotal': total.toFixed(2)
+    };
+
+    for (const [id, value] of Object.entries(elements)) {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    }
+}
 
 function showOrderConfirmation(order) {
     const orderMessage = document.getElementById("orderMessage");
+    if (!orderMessage) return;
+
     orderMessage.innerHTML = `
         <div class="order-success">
             <i class="fas fa-check-circle"></i>
@@ -58,6 +140,8 @@ function showOrderConfirmation(order) {
 
 function showErrorMessage(message) {
     const orderMessage = document.getElementById("orderMessage");
+    if (!orderMessage) return;
+
     orderMessage.innerHTML = `
         <div class="order-error">
             <i class="fas fa-exclamation-circle"></i>
@@ -67,99 +151,8 @@ function showErrorMessage(message) {
     orderMessage.classList.add("error");
 }
 
-function updateCartSummary() {
-    // Get cart from localStorage
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-    const total = subtotal + shipping;
-
-    document.getElementById('totalItems').textContent = totalItems;
-    document.getElementById('totalPrice').textContent = subtotal.toFixed(2);
-    document.getElementById('shippingCost').textContent = shipping.toFixed(2);
-    document.getElementById('finalTotal').textContent = total.toFixed(2);
-}
-// Add this to show loading and success/error states
-async function handleOrderSubmission(orderData) {
-    const submitButton = document.querySelector('#checkoutForm button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.innerHTML = 'Processing...';
-
-    try {
-        const order = orderManager.placeOrder(orderData);
-        await sendOrderConfirmationEmail(order);
-        
-        showSuccessMessage('Order placed and confirmation email sent!');
-        // Clear cart and redirect
-    } catch (error) {
-        showErrorMessage('Order placed but email could not be sent. Please check your email address.');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.innerHTML = 'Place Order';
-    }
-}
-// checkout.js
-
-// checkout.js
-
-// Initialize EmailJS
-(function() {
-    emailjs.init("FfaX8DQ1nRiTBL-gs"); // Add your EmailJS public key here
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
-    updateCartSummary();
-
-    const checkoutForm = document.getElementById("checkoutForm");
-    checkoutForm.addEventListener("submit", async function(event) {
-        event.preventDefault();
-
-        // Collect user information
-        const orderData = {
-            customerInfo: {
-                name: document.getElementById("name").value,
-                address: document.getElementById("address").value,
-                phone: document.getElementById("phone").value,
-                email: document.getElementById("email").value // Make sure you have an email input field
-            },
-            items: cart,
-            totalAmount: parseFloat(document.getElementById("finalTotal").textContent),
-            shippingCost: parseFloat(document.getElementById("shippingCost").textContent),
-            paymentMethod: "Cash on Delivery"
-        };
-
-        try {
-            // Place the order
-            const order = orderManager.placeOrder(orderData);
-            
-            // Show success message
-            showOrderConfirmation(order);
-
-            // Send confirmation email
-            await sendOrderConfirmationEmail(order);
-
-            // Clear the cart
-            localStorage.removeItem('cart');
-            cart = [];
-            updateCartSummary();
-
-            // Redirect to home page after a short delay
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
-
-        } catch (error) {
-            console.error('Error placing order:', error);
-            showErrorMessage("There was an error placing your order. Please try again.");
-        }
-    });
-});
-
 async function sendOrderConfirmationEmail(order) {
     try {
-        // Format items for email
         const itemsList = order.items.map(item => 
             `${item.name} - Quantity: ${item.quantity} - Price: $${(item.price * item.quantity).toFixed(2)}`
         ).join('\n');
@@ -177,9 +170,11 @@ async function sendOrderConfirmationEmail(order) {
             phone: order.customerInfo.phone
         };
 
+        console.log('Sending email with params:', templateParams); // Debug log
+
         const response = await emailjs.send(
-            'service_lu798jf', // Add your EmailJS service ID
-            'template_4wlv4tf', // Add your EmailJS template ID
+            'service_lu798jf', // Your EmailJS service ID
+            'template_4wlv4tf', // Your EmailJS template ID
             templateParams
         );
 
@@ -191,4 +186,14 @@ async function sendOrderConfirmationEmail(order) {
         throw error;
     }
 }
+
+// Add this to handle errors globally
+window.addEventListener('error', function(event) {
+    console.error('Global error:', event.error);
+});
+
+// Add this to handle unhandled promise rejections
+window.addEventListener('unhandledrejection', function(event) {
+    console.error('Unhandled promise rejection:', event.reason);
+});
 
