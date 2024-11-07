@@ -20,11 +20,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                // Login successful
                 const user = userCredential.user;
+                
+                if (!user.emailVerified) {
+                    // If email isn't verified, send a new verification email
+                    user.sendEmailVerification({
+                        url: 'https://scintillating-gnome-48c89a.netlify.app/login',
+                        handleCodeInApp: true
+                    }).then(() => {
+                        alert('Please verify your email. A new verification link has been sent.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Login';
+                        firebase.auth().signOut();
+                    });
+                    throw new Error('Please verify your email before logging in.');
+                }
+
+                // Email is verified, proceed with login
                 localStorage.setItem('userEmail', user.email);
                 localStorage.setItem('userId', user.uid);
-                window.location.href = 'index.html'; // Redirect to home page
+                window.location.href = 'index.html';
             })
             .catch((error) => {
                 console.error('Login error:', error);
