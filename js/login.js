@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
+        if (!email || !password) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Show loading state
         const submitButton = this.querySelector('button');
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
@@ -17,24 +23,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 const user = userCredential.user;
                 
                 if (!user.emailVerified) {
-                    alert('Please verify your email before logging in.');
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Login';
-                    return firebase.auth().signOut();
+                    // If email isn't verified, send a new verification email
+                    user.sendEmailVerification({
+                        url: 'https://scintillating-gnome-48c89a.netlify.app/login',
+                        handleCodeInApp: true
+                    }).then(() => {
+                        alert('Please verify your email. A new verification link has been sent.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Login';
+                        firebase.auth().signOut();
+                    });
+                    throw new Error('Please verify your email before logging in.');
                 }
 
-                // Store user info in localStorage
+                // Email is verified, proceed with login
                 localStorage.setItem('userEmail', user.email);
-                
-                // Get additional user data from Firestore
-                firebase.firestore().collection('users').doc(user.uid).get()
-                    .then((doc) => {
-                        if (doc.exists) {
-                            const userData = doc.data();
-                            localStorage.setItem('userName', userData.username);
-                            window.location.href = 'index.html';
-                        }
-                    });
+                localStorage.setItem('userId', user.uid);
+                window.location.href = 'index.html';
             })
             .catch((error) => {
                 console.error('Login error:', error);
