@@ -67,7 +67,7 @@ function updateCartDisplay() {
     });
 
     // Add a checkout button
-
+     <button id="checkoutButton" class="add-to-cart">Proceed to Checkout</button>
     checkoutButton.onclick = () => window.location.href = "checkout.html";
     cartContainer.appendChild(checkoutButton);
 
