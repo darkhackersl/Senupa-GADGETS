@@ -1,4 +1,4 @@
-// js/cart.js
+// cart.js
 
 class ShoppingCart {
     constructor() {
@@ -10,8 +10,11 @@ class ShoppingCart {
         document.addEventListener('DOMContentLoaded', () => {
             this.updateCartDisplay();
             this.updateCartIcon();
+            this.setupCheckoutButton();
         });
+    }
 
+    setupCheckoutButton() {
         const checkoutButton = document.getElementById('checkoutButton');
         if (checkoutButton) {
             checkoutButton.addEventListener('click', () => this.proceedToCheckout());
@@ -37,7 +40,7 @@ class ShoppingCart {
                     price: product.price,
                     image: product.image,
                     quantity: 1,
-                    brand: product.brand
+                    brand: product.brand || 'Generic'
                 });
             }
 
@@ -104,6 +107,10 @@ class ShoppingCart {
 
         let totalAmount = 0;
 
+        // Create cart items container
+        const cartItemsContainer = document.createElement('div');
+        cartItemsContainer.className = 'cart-items';
+
         this.cart.forEach(item => {
             const itemTotal = item.price * item.quantity;
             totalAmount += itemTotal;
@@ -119,9 +126,9 @@ class ShoppingCart {
                     <p class="brand">${item.brand}</p>
                     <p class="price">$${item.price.toFixed(2)}</p>
                     <div class="quantity-controls">
-                        <button onclick="shoppingCart.removeFromCart(${item.id})">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="shoppingCart.addToCart(${item.id})">+</button>
+                        <button class="quantity-btn minus" onclick="shoppingCart.updateQuantity(${item.id}, -1)">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn plus" onclick="shoppingCart.updateQuantity(${item.id}, 1)">+</button>
                     </div>
                     <p class="item-total">Total: $${itemTotal.toFixed(2)}</p>
                 </div>
@@ -129,16 +136,22 @@ class ShoppingCart {
                     <i class="fas fa-trash"></i>
                 </button>
             `;
-            cartContainer.appendChild(cartItem);
+            cartItemsContainer.appendChild(cartItem);
         });
 
+        // Add cart items to main container
+        cartContainer.appendChild(cartItemsContainer);
+
+        // Add cart summary
         const summarySection = document.createElement('div');
         summarySection.className = 'cart-summary';
         summarySection.innerHTML = `
             <h3>Cart Summary</h3>
             <div class="summary-details">
                 <p>Total Items: <span id="totalItems">${this.getTotalItems()}</span></p>
-                <p>Total Amount: <span id="totalPrice">$${totalAmount.toFixed(2)}</span></p>
+                <p>Subtotal: <span>$${totalAmount.toFixed(2)}</span></p>
+                <p>Tax (10%): <span>$${(totalAmount * 0.1).toFixed(2)}</span></p>
+                <p class="total">Total Amount: <span id="totalPrice">$${(totalAmount * 1.1).toFixed(2)}</span></p>
             </div>
             <button id="checkoutButton" class="checkout-button">
                 Proceed to Checkout
@@ -148,6 +161,21 @@ class ShoppingCart {
             </button>
         `;
         cartContainer.appendChild(summarySection);
+    }
+
+    updateQuantity(productId, change) {
+        const item = this.cart.find(item => item.id === productId);
+        if (item) {
+            const newQuantity = item.quantity + change;
+            if (newQuantity > 0) {
+                item.quantity = newQuantity;
+                this.saveCart();
+                this.updateCartDisplay();
+                this.updateCartIcon();
+            } else {
+                this.removeFromCart(productId);
+            }
+        }
     }
 
     updateCartIcon() {
@@ -166,11 +194,21 @@ class ShoppingCart {
     showNotification(message, type = 'success') {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        notification.textContent = message;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
         document.body.appendChild(notification);
 
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+
+        // Remove notification after delay
         setTimeout(() => {
-            notification.remove();
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
 
@@ -182,8 +220,7 @@ class ShoppingCart {
 
         const isLoggedIn = localStorage.getItem('userEmail');
         if (!isLoggedIn) {
-            this.showNotification('Please login to checkout', 'error');
-            window.location.href = 'login.html';
+            this.showNotification('Please login to checkout', 'error'); window.location.href = 'login.html';
             return;
         }
 
