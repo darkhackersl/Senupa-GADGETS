@@ -1,0 +1,136 @@
+.tracking-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.tracking-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tracking-form input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.tracking-form button {
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tracking-form button:hover {
+    background-color: #2980b9;
+}
+
+.tracking-result {
+    padding: 2rem;
+    border: 2px solid #eee;
+    border-radius: 10px;
+}
+
+.tracking-result.hidden {
+    display: none;
+}
+
+.order-info {
+    margin-bottom: 2rem;
+}
+
+.order-info h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.tracking-timeline {
+    position: relative;
+    padding-left: 50px;
+}
+
+.tracking-step {
+    position: relative;
+    padding-bottom: 30px;
+}
+
+.tracking-step:before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.tracking-step:after {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 20px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background-color: #ddd;
+}
+
+.tracking-step:last-child:after {
+    display: none;
+}
+
+.tracking-step.completed:before {
+    background-color: #2ecc71;
+}
+
+.tracking-step.completed:after {
+    background-color: #2ecc71;
+}
+
+.tracking-step.current:before {
+    background-color: #3498db;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.2);
+}
+
+.step-content {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.step-content h4 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.step-content p {
+    color: #7f8c8d;
+    margin: 0;
+}
+
+.step-date {
+    color: #95a5a6;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .tracking-form {
+        flex-direction: column;
+    }
+    
+    .tracking-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
