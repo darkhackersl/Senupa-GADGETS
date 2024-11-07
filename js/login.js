@@ -2,10 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     
-// login.js
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('loginForm');
-    
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -27,8 +23,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     return firebase.auth().signOut();
                 }
 
-                // Redirect to home page after successful login
-                window.location.href = 'index.html';
+                // Store user info in localStorage
+                localStorage.setItem('userEmail', user.email);
+                
+                // Get additional user data from Firestore
+                firebase.firestore().collection('users').doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            localStorage.setItem('userName', userData.username);
+                            window.location.href = 'index.html';
+                        }
+                    });
             })
             .catch((error) => {
                 console.error('Login error:', error);
