@@ -33,6 +33,19 @@ header {
     z-index: 100;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+/* Default styles for header */
+.header {
+    font-size: 24px; /* Default size for larger screens */
+    padding: 20px;   /* Default padding */
+}
+
+/* Styles for mobile devices */
+@media (max-width: 768px) {
+    .header {
+        font-size: 18px; /* Smaller font size for mobile */
+        padding: 10px;   /* Reduced padding for mobile */
+    }
+}
 
 header .container {
     display: flex;
