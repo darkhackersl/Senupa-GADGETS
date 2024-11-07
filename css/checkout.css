@@ -126,3 +126,20 @@ button[type="submit"]:hover {
         font-size: 0.9rem;
     }
 }
+.checkout-button {
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.checkout-button:hover {
+    background-color: #555;
+}
+
