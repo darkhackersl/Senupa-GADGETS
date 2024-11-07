@@ -1,16 +1,24 @@
-// Constants for shipping
-const SHIPPING_COST = 5.99;  // Flat shipping fee
-const FREE_SHIPPING_THRESHOLD = 50.00;  // Minimum cart total for free shipping
+// Shipping constants
+const SHIPPING_COST = 5.99;
+const FREE_SHIPPING_THRESHOLD = 50.00;
 
+// Initialize the cart from localStorage or start with an empty array
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Function to add an item to the cart
 function addToCart(productId) {
+    // Ensure 'products' array is defined and accessible
+    if (typeof products === 'undefined') {
+        console.error('Products array is not defined.');
+        return;
+    }
     const product = products.find(p => p.id === productId);
     if (!product) {
         console.error('Product not found');
         return;
     }
 
+    // Check if product is already in the cart
     const existingItem = cart.find(item => item.id === productId);
     if (existingItem) {
         existingItem.quantity += 1;
@@ -22,6 +30,7 @@ function addToCart(productId) {
     updateCartDisplay();
 }
 
+// Function to remove an item from the cart
 function removeFromCart(productId) {
     const index = cart.findIndex(item => item.id === productId);
     if (index !== -1) {
@@ -35,22 +44,32 @@ function removeFromCart(productId) {
     }
 }
 
+// Function to update the cart data in localStorage
 function updateLocalStorage() {
-    const cartContainer = document.getElementById('cartContainer');
-    const checkoutButton = document.getElementById('checkoutButton'); // Reference to existing button
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+// Function to display the cart items and update totals
+function updateCartDisplay() {
+    const cartContainer = document.getElementById('cartContainer');
+    const checkoutButton = document.getElementById('checkoutButton'); // Link to existing checkout button
+
     if (!cartContainer || !checkoutButton) {
         console.error("Cart container or checkout button not found in HTML.");
         return;
+    }
 
     cartContainer.innerHTML = '';
 
+    // Display message if cart is empty
     if (cart.length === 0) {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+        checkoutButton.style.display = 'none'; // Hide checkout button when cart is empty
         updateCartSummary();
         return;
     }
 
+    // Display each item in the cart
     cart.forEach(item => {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
@@ -66,25 +85,19 @@ function updateLocalStorage() {
         cartContainer.appendChild(cartItem);
     });
 
- 
-
+    // Update cart summary with total items, total price, and shipping cost
     updateCartSummary();
 
     // Display the existing checkout button if there are items in the cart
     checkoutButton.style.display = 'block';
 }
 
-// Redirect to checkout page
-function proceedToCheckout() {
-    window.location.href = "checkout.html";
-}
-
-
+// Function to update the cart summary including shipping
 function updateCartSummary() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // Determine shipping cost based on cart total
+    // Determine shipping cost based on the threshold
     const shippingCost = totalPrice >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
     const finalTotal = totalPrice + shippingCost;
 
@@ -93,11 +106,12 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
     document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
 }
-    // Redirect to checkout page
+
+// Redirect to checkout page
 function proceedToCheckout() {
     window.location.href = "checkout.html";
 }
 
-// Initialize cart display when the page loads
+// Initialize cart display on page load
 document.addEventListener('DOMContentLoaded', updateCartDisplay);
 
