@@ -121,8 +121,10 @@ async function sendOrderConfirmationEmail(order) {
     ).join('\n');
 
     const templateParams = {
-        to_name: order.customerInfo.name,
-        to_email: order.customerInfo.email,
+        to_name: "MR Gadgets", // Change this to your name or "Admin"
+        to_email: "thenulapanapiti219@gmail.com", // Change this to your email address
+        customer_name: order.customerInfo.name,
+        customer_email: order.customerInfo.email,
         order_id: order.orderId,
         order_date: new Date().toLocaleDateString(),
         items: itemsList,
@@ -131,6 +133,7 @@ async function sendOrderConfirmationEmail(order) {
         total: order.totalAmount.toFixed(2),
         shipping_address: order.customerInfo.address,
         phone: order.customerInfo.phone
+
     };
 
     try {
