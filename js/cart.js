@@ -4,167 +4,120 @@
 const SHIPPING_COST = 5.99;
 const FREE_SHIPPING_THRESHOLD = 50.00;
 
-class ShoppingCart {
-    constructor() {
-        this.cart = [];
-        this.loadCartFromStorage();
-        this.updateCartDisplay();
+// Initialize the cart from localStorage or start with an empty array
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Function to add an item to the cart
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) {
+        console.error('Product not found');
+        return;
     }
 
-    loadCartFromStorage() {
-        try {
-            const savedCart = localStorage.getItem('cart');
-            this.cart = savedCart ? JSON.parse(savedCart) : [];
-        } catch (error) {
-            console.error('Error loading cart from storage:', error);
-            this.cart = [];
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    updateLocalStorage();
+    updateCartDisplay();
+}
+
+// Function to remove an item from the cart
+function removeFromCart(productId) {
+    const index = cart.findIndex(item => item.id === productId);
+    if (index !== -1) {
+        if (cart[index].quantity > 1) {
+            cart[index].quantity -= 1;
+        } else {
+            cart.splice(index, 1);
         }
-    }
-
-    saveCartToStorage() {
-        try {
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-        } catch (error) {
-            console.error('Error saving cart to storage:', error);
-            this.showNotification('Error saving cart', 'error');
-        }
-    }
-
-    addToCart(productId) {
-        try {
-            if (typeof products === 'undefined' || !Array.isArray(products)) {
-                throw new Error('Products data is not available');
-            }
-
-            const product = products.find(p => p.id === productId);
-            if (!product) {
-                throw new Error('Product not found');
-            }
-
-            const existingItem = this.cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                this.cart.push({ ...product, quantity: 1 });
-            }
-
-            this.saveCartToStorage();
-            this.updateCartDisplay();
-            this.showNotification('Product added to cart', 'success');
-        } catch (error) {
-            console.error('Error adding to cart:', error);
-            this.showNotification(error.message, 'error');
-        }
-    }
-
-    removeFromCart(productId) {
-        try {
-            const index = this.cart.findIndex(item => item.id === productId);
-            if (index !== -1) {
-                if (this.cart[index].quantity > 1) {
-                    this.cart[index].quantity -= 1;
-                } else {
-                    this.cart.splice(index, 1);
-                }
-                this.saveCartToStorage();
-                this.updateCartDisplay();
-                this.showNotification('Product removed from cart', 'success');
-            } else {
-                throw new Error('Product not found in cart');
-            }
-        } catch (error) {
-            console.error('Error removing from cart:', error);
-            this.showNotification(error.message, 'error');
-        }
-    }
-
-    updateCartDisplay() {
-        const cartContainer = document.getElementById('cartContainer');
-        if (!cartContainer) {
-            console.error("Cart container not found in HTML.");
-            return;
-        }
-
-        cartContainer.innerHTML = '';
-
-        if (this.cart.length === 0) {
-            cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-            return;
-        }
-
-        this.cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-info">
-                    <h3>${item.name}</h3>
-                    <p>Price: $${item.price.toFixed(2)}</p>
-                    <p>Quantity: ${item.quantity}</p>
-                    <button onclick="shoppingCart.removeFromCart(${item.id})">Remove</button>
-                </div>
-            `;
-            cartContainer.appendChild(cartItem);
-        });
-
-        this.updateCartSummary();
-    }
-
-    updateCartSummary() {
-        const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
-        const subtotal = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-        const finalTotal = subtotal + shippingCost;
-
-        document.getElementById('totalItems').textContent = totalItems;
-        document.getElementById('totalPrice').textContent = subtotal.toFixed(2);
-        document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
-        document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
-    }
-
-    showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
-    }
-
-    checkout() {
-        if (this.cart.length === 0) {
-            this.showNotification('Your cart is empty', 'error');
-            return;
-        }
-
-        // Here you would typically integrate with a payment gateway
-        // For this example, we'll just simulate a successful checkout
-        this.showNotification('Checkout successful! Thank you for your purchase.', 'success');
-        this.cart = [];
-        this.saveCartToStorage();
-        this.updateCartDisplay();
-
-        // Redirect to a thank you page or order confirmation page
-        setTimeout(() => {
-            window.location.href = 'checkout.html';
-        }, 2000);
+        updateLocalStorage();
+        updateCartDisplay();
     }
 }
 
-// Initialize the shopping cart
-const shoppingCart = new ShoppingCart();
+// Function to update the cart data in localStorage
+function updateLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 
-// Event listener for the checkout button
-document.addEventListener('DOMContentLoaded', function() {
+// Function to display the cart items and update totals
+function updateCartDisplay() {
+    const cartContainer = document.getElementById('cartContainer');
+    if (!cartContainer) {
+        console.error("Cart container not found in HTML.");
+        return;
+    }
+
+    cartContainer.innerHTML = '';
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+        updateCartSummary();
+        return;
+    }
+
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-info">
+                <h3>${item.name}</h3>
+                <p>Price: $${item.price.toFixed(2)}</p>
+                <p>Quantity: ${item.quantity}</p>
+                <button onclick="removeFromCart(${item.id})">Remove</button>
+            </div>
+        `;
+        cartContainer.appendChild(cartItem);
+    });
+
+    updateCartSummary();
+}
+
+// Function to update the cart summary including shipping
+function updateCartSummary() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shippingCost = totalPrice >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const finalTotal = totalPrice + shippingCost;
+
+    document.getElementById('totalItems').textContent = totalItems;
+    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
+    document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
+
+    // Update the checkout button visibility
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', () => shoppingCart.checkout());
+        checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+}
+
+// Function to handle checkout
+function proceedToCheckout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add items before checking out.');
+        return;
+    }
+    // Redirect to checkout page
+    window.location.href = "checkout.html";
+}
+
+// Initialize cart display on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartDisplay();
+
+    // Add event listener to checkout button
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', proceedToCheckout);
     }
 });
-
-// Function to add an item to the cart (to be called from product pages)
-function addToCart(productId) {
-    shoppingCart.addToCart(productId);
-}
 }
 
 // Initialize cart display on page load
