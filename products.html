@@ -11,20 +11,23 @@
 </head>
 <body>
     <header>
-        <div class="container">
-             <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
-              <nav class="scroll-menu">
+    <div class="container">
+        <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+        <nav class="scroll-menu">
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
             <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-    
-
-            </nav>
-
-                    <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search products...">
-            <button id="search-button">Search</button>
-        </div>
-    </header>
+            <!-- Add this user info container -->
+            <div id="userInfoContainer" class="user-info-container">
+                <span id="userNameDisplay"></span>
+                <span id="userEmailDisplay"></span>
+            </div>
+            <a href="login.html" id="loginLink"><i class="fas fa-user"></i> Login</a>
+            <a href="register.html" id="registerLink"><i class="fas fa-user-plus"></i> Register</a>
+            <a href="#" id="logoutLink" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </div>
+</header>
     <main>
         <div class="container">
             <h2>Our Products</h2>
