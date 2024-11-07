@@ -85,12 +85,7 @@ function updateCartDisplay() {
     // Update the cart summary with totals
     updateCartSummary();
 
-    // Add the checkout button at the end of the cart items
-    const checkoutButton = document.createElement('button');
-    checkoutButton.textContent = "Proceed to Checkout";
-    checkoutButton.onclick = () => window.location.href = "checkout.html";
-    checkoutButton.className = 'checkout-button'; // Optionally, add a class for styling
-    cartContainer.appendChild(checkoutButton);
+   
 }
 
 
@@ -108,6 +103,33 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
     document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
 }
+document.addEventListener('DOMContentLoaded', function () {
+  // Get the checkout button
+  const checkoutBtn = document.getElementById('checkoutbutton');
+
+  // Check if the button exists
+  if (checkoutBtn) {
+    // Add event listener for click event
+    checkoutBtn.addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default behavior (if it's a form)
+
+      // Check if the cart is not empty (you might need to adjust this)
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cartItems.length === 0) {
+        alert('Your cart is empty! Please add items before proceeding.');
+        return;
+      }
+
+      // Optionally, display a confirmation modal or something before redirecting
+      const confirmCheckout = confirm('Are you sure you want to proceed to checkout?');
+      if (confirmCheckout) {
+        // Proceed to the checkout page or handle checkout process
+        window.location.href = '/checkout';  // Redirect to checkout page
+      }
+    });
+  }
+});
+
 
 // Redirect to checkout page
 function proceedToCheckout() {
