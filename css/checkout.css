@@ -254,6 +254,22 @@ input[type="text"]:focus {
     background: #e74c3c;
 }
 
+input[type="email"] {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+input[type="email"]:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
 /* Place Order Button */
 button[type="submit"] {
     background-color: #333;
