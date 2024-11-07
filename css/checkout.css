@@ -313,6 +313,36 @@ button[type="submit"]:active {
 .continue-shopping:hover {
     color: #333;
 }
+#orderMessage {
+    margin-top: 20px;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.success-message i {
+    font-size: 48px;
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+.success-message h3 {
+    margin: 10px 0;
+    color: #155724;
+}
+
+.success-message p {
+    margin: 5px 0;
+}
+
+.show {
+    display: block;
+}
 
 /* Cart Items Display */
 #cartItems {
