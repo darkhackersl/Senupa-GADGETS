@@ -195,6 +195,65 @@ nav a.active {
         justify-content: center;
     }
 }
+.mega-menu ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.mega-menu li {
+    position: relative;
+}
+
+.mega-menu a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown {
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    width: 100%;
+    left: 0;
+}
+
+.dropdown-content {
+    display: flex;
+    padding: 20px;
+}
+
+.dropdown-content div {
+    flex: 1;
+}
+
+.dropdown-content h3 {
+    margin-bottom: 10px;
+    color: #3498db;
+}
+
+.mega-menu li:hover .dropdown {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .mega-menu ul {
+        flex-direction: column;
+    }
+    
+    .dropdown {
+        position: static;
+    }
+    
+    .dropdown-content {
+        flex-direction: column;
+    }
+}
 
 /* Main Content Styles */
 main {
