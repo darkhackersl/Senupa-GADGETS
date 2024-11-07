@@ -187,6 +187,43 @@ nav a.active {
         margin: 5px 0;
     }
 }
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#userInfo {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    text-align: right;
+}
+
+#welcomeMessage {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#userEmail {
+    display: block;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .user-section {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    #userInfo {
+        width: 100%;
+        text-align: center;
+    }
+}
 .scroll-menu {
     display: flex;
     overflow-x: auto;
