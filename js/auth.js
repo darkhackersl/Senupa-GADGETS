@@ -40,39 +40,64 @@ function logout() {
 }
 
 // auth.js
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        // User is signed in
-        localStorage.setItem('userEmail', user.email);
-        localStorage.setItem('userId', user.uid);
-        
-        // Update UI for logged in user
-        const loginLinks = document.querySelectorAll('a[href="login.html"]');
-        const registerLinks = document.querySelectorAll('a[href="register.html"]');
-        
-        loginLinks.forEach(link => {
-            link.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-            link.href = '#';
-            link.onclick = (e) => {
-                e.preventDefault();
-                firebase.auth().signOut()
-                    .then(() => {
-                        localStorage.removeItem('userEmail');
-                        localStorage.removeItem('userId');
-                        window.location.href = 'index.html';
-                    })
-                    .catch((error) => {
-                        console.error('Logout error:', error);
-                    });
-            };
+document.addEventListener('DOMContentLoaded', function() {
+    // Get UI elements
+    const userInfo = document.getElementById('userInfo');
+    const userName = document.getElementById('userName');
+    const userEmail = document.getElementById('userEmail');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Function to update UI based on auth state
+    function updateUI(user) {
+        if (user) {
+            // User is signed in
+            if (userInfo) userInfo.style.display = 'inline-flex';
+            if (loginLink) loginLink.style.display = 'none';
+            if (registerLink) registerLink.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'inline-block';
+
+            // Get user data from Firestore
+            firebase.firestore().collection('users').doc(user.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        if (userName) userName.textContent = userData.username || 'User';
+                        if (userEmail) userEmail.textContent = user.email;
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error getting user data:", error);
+                });
+        } else {
+            // User is signed out
+            if (userInfo) userInfo.style.display = 'none';
+            if (loginLink) loginLink.style.display = 'inline-block';
+            if (registerLink) registerLink.style.display = 'inline-block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+        }
+    }
+
+    // Listen for auth state changes
+    firebase.auth().onAuthStateChanged((user) => {
+        updateUI(user);
+    });
+
+    // Handle logout
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                // Clear any stored user data
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userId');
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Logout error:', error);
+                alert('Error logging out: ' + error.message);
+            });
         });
-        
-        registerLinks.forEach(link => {
-            link.style.display = 'none';
-        });
-    } else {
-        // User is signed out
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('userId');
     }
 });
+
