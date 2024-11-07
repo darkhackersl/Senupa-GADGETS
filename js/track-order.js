@@ -47,4 +47,26 @@ function displayOrderTracking(order) {
             <p><strong>Status:</strong> ${status}</p>
         </div>
         <div class="tracking-timeline">
-            ${steps.map((step, index) => `
+            ${steps.map((step, index) => ` <div class="tracking-step ${step.completed ? 'completed' : ''} ${index === steps.length - 1 ? 'current' : ''}">
+                    <div class="step-content">
+                        <h4>${step.title}</h4>
+                        <p class="step-date">${step.date}</p>
+                    </div>
+                </div>`).join('')}
+        </div>
+    `;
+}
+
+function formatDate(date) {
+    return date.toLocaleString();
+}
+
+function addHours(date, hours) {
+    return new Date(date.getTime() + hours * 60 * 60 * 1000);
+}
+
+function showError(message) {
+    const trackingResult = document.getElementById('trackingResult');
+    trackingResult.classList.remove('hidden');
+    trackingResult.innerHTML = `<p style="color: red;">${message}</p>`;
+}
