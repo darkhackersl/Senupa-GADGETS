@@ -5,59 +5,47 @@ const SHIPPING_COST = 5.99;
 const FREE_SHIPPING_THRESHOLD = 50.00;
 
 // Initialize the cart from localStorage or start with an empty array
+// js/cart.js
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Function to add an item to the cart
+// Add to cart function
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    if (!product) {
-        console.error('Product not found');
-        return;
-    }
+    if (!product) return;
 
     const existingItem = cart.find(item => item.id === productId);
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: 1
+        });
     }
 
-    updateLocalStorage();
+    // Save cart to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Show notification
+    alert('Product added to cart!');
+    
+    // Update cart display
     updateCartDisplay();
 }
 
-// Function to remove an item from the cart
-function removeFromCart(productId) {
-    const index = cart.findIndex(item => item.id === productId);
-    if (index !== -1) {
-        if (cart[index].quantity > 1) {
-            cart[index].quantity -= 1;
-        } else {
-            cart.splice(index, 1);
-        }
-        updateLocalStorage();
-        updateCartDisplay();
-    }
-}
-
-// Function to update the cart data in localStorage
-function updateLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Function to display the cart items and update totals
+// Display cart items
 function updateCartDisplay() {
     const cartContainer = document.getElementById('cartContainer');
-    if (!cartContainer) {
-        console.error("Cart container not found in HTML.");
-        return;
-    }
+    if (!cartContainer) return;
 
     cartContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-        updateCartSummary();
+        cartContainer.innerHTML = '<p>Your cart is empty</p>';
         return;
     }
 
@@ -70,7 +58,14 @@ function updateCartDisplay() {
                 <h3>${item.name}</h3>
                 <p>Price: $${item.price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
-                <button onclick="removeFromCart(${item.id})">Remove</button>
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateQuantity(${item.id}, 1)">+</button>
+                </div>
+                <button onclick="removeFromCart(${item.id})" class="remove-btn">
+                    Remove
+                </button>
             </div>
         `;
         cartContainer.appendChild(cartItem);
@@ -79,47 +74,56 @@ function updateCartDisplay() {
     updateCartSummary();
 }
 
-// Function to update the cart summary including shipping
+// Update quantity
+function updateQuantity(productId, change) {
+    const item = cart.find(item => item.id === productId);
+    if (!item) return;
+
+    item.quantity += change;
+    
+    if (item.quantity <= 0) {
+        removeFromCart(productId);
+    } else {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartDisplay();
+    }
+}
+
+// Remove from cart
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+}
+
+// Update cart summary
 function updateCartSummary() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shippingCost = totalPrice >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-    const finalTotal = totalPrice + shippingCost;
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = subtotal >= 50 ? 0 : 5.99;
+    const total = subtotal + shipping;
 
     document.getElementById('totalItems').textContent = totalItems;
-    document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
-    document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
-    document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
-
-    // Update the checkout button visibility
-    const checkoutBtn = document.getElementById('checkout-btn');
-    if (checkoutBtn) {
-        checkoutBtn.style.display = cart.length > 0 ? 'block' : 'none';
-    }
+    document.getElementById('totalPrice').textContent = subtotal.toFixed(2);
+    document.getElementById('shippingCost').textContent = shipping.toFixed(2);
+    document.getElementById('finalTotal').textContent = total.toFixed(2);
 }
 
-// Function to handle checkout
+// Proceed to checkout
 function proceedToCheckout() {
     if (cart.length === 0) {
-        alert('Your cart is empty. Please add items before checking out.');
+        alert('Your cart is empty!');
         return;
     }
-    // Redirect to checkout page
-    window.location.href = "checkout.html";
+    window.location.href = 'checkout.html';
 }
 
-// Initialize cart display on page load
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize cart display when page loads
+document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay();
-
-    // Add event listener to checkout button
+    
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', proceedToCheckout);
     }
 });
-}
-
-// Initialize cart display on page load
-document.addEventListener('DOMContentLoaded', updateCartDisplay);
-
