@@ -52,19 +52,16 @@ function updateLocalStorage() {
 // Function to display the cart items and update totals
 function updateCartDisplay() {
     const cartContainer = document.getElementById('cartContainer');
-    const checkoutButton = document.getElementById('checkoutButton'); // Link to existing checkout button
-
-    if (!cartContainer || !checkoutButton) {
-        console.error("Cart container or checkout button not found in HTML.");
+    if (!cartContainer) {
+        console.error("Cart container not found in HTML.");
         return;
     }
 
     cartContainer.innerHTML = '';
 
-    // Display message if cart is empty
+    // Check if cart is empty and show a message if it is
     if (cart.length === 0) {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-        checkoutButton.style.display = 'none'; // Hide checkout button when cart is empty
         updateCartSummary();
         return;
     }
@@ -85,12 +82,17 @@ function updateCartDisplay() {
         cartContainer.appendChild(cartItem);
     });
 
-    // Update cart summary with total items, total price, and shipping cost
+    // Update the cart summary with totals
     updateCartSummary();
 
-    // Display the existing checkout button if there are items in the cart
-    checkoutButton.style.display = 'block';
+    // Add the checkout button at the end of the cart items
+    const checkoutButton = document.createElement('button');
+    checkoutButton.textContent = "Proceed to Checkout";
+    checkoutButton.onclick = () => window.location.href = "checkout.html";
+    checkoutButton.className = 'checkout-button'; // Optionally, add a class for styling
+    cartContainer.appendChild(checkoutButton);
 }
+
 
 // Function to update the cart summary including shipping
 function updateCartSummary() {
