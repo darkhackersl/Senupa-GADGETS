@@ -18,37 +18,33 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                
-                if (!user.emailVerified) {
-                    // If email isn't verified, send a new verification email
-                    user.sendEmailVerification({
-                        url: 'https://scintillating-gnome-48c89a.netlify.app/login',
-                        handleCodeInApp: true
-                    }).then(() => {
-                        alert('Please verify your email. A new verification link has been sent.');
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Login';
-                        firebase.auth().signOut();
-                    });
-                    throw new Error('Please verify your email before logging in.');
-                }
-
-                // Email is verified, proceed with login
-                localStorage.setItem('userEmail', user.email);
-                localStorage.setItem('userId', user.uid);
-                window.location.href = 'index.html';
-            })
-            .catch((error) => {
-                console.error('Login error:', error);
-                alert(error.message);
-                submitButton.disabled = false;
-                submitButton.textContent = 'Login';
-            });
+// login.js
+firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        
+        if (!user.emailVerified) {
+            // Handle unverified email...
+        } else {
+            // Store user data
+            localStorage.setItem('userEmail', user.email);
+            localStorage.setItem('userId', user.uid);
+            
+            // Get additional user data from Firestore
+            return firebase.firestore().collection('users').doc(user.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        localStorage.setItem('userName', userData.username);
+                    }
+                    window.location.href = 'index.html';
+                });
+        }
+    })
+    .catch((error) => {
+        console.error('Login error:', error);
+        alert(error.message);
     });
-});
 // Add this to login.js
 document.getElementById('resendVerificationBtn')?.addEventListener('click', function() {
     const email = document.getElementById('email').value;
