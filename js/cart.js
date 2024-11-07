@@ -43,6 +43,94 @@ function removeFromCart(productId) {
         updateCartDisplay();
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the checkout button by its ID
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    // Ensure the button exists
+    if (!checkoutBtn) {
+        console.error('Checkout button not found!');
+        return;
+    }
+
+    // Add event listener to handle checkout button click
+    checkoutBtn.addEventListener('click', function (event) {
+        // Prevent default action (e.g., form submission)
+        event.preventDefault();
+
+        // Retrieve the cart from localStorage (or use an empty array if nothing is stored)
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Check if the cart is empty
+        if (cartItems.length === 0) {
+            alert('Your cart is empty! Please add items before proceeding.');
+            return;
+        }
+
+        // Confirm with the user before proceeding to checkout
+        const confirmCheckout = confirm('Are you sure you want to proceed to checkout?');
+
+        // If the user confirms, redirect to the checkout page
+        if (confirmCheckout) {
+            // Redirecting to the checkout page
+            window.location.href = '/checkout';  // Modify the path to your checkout page if needed
+        }
+    });
+
+    // Optionally, update the cart display on page load
+    updateCartDisplay();
+
+    // Function to update the cart display (show number of items in cart, etc.)
+    function updateCartDisplay() {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCount = cartItems.length;
+        const cartCountDisplay = document.getElementById('cart-count');
+
+        if (cartCountDisplay) {
+            // Update the number of items in the cart on the page
+            cartCountDisplay.textContent = cartCount;
+        }
+    }
+
+    // Example: Function to add items to the cart (just for testing or future use)
+    function addToCart(product) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Check if the product is already in the cart
+        const existingProductIndex = cart.findIndex(item => item.id === product.id);
+        if (existingProductIndex >= 0) {
+            // If it exists, update the quantity or any other data
+            cart[existingProductIndex].quantity += product.quantity;
+        } else {
+            // If it doesn't exist, add the product to the cart
+            cart.push(product);
+        }
+
+        // Save the updated cart back to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update the cart display
+        updateCartDisplay();
+    }
+
+    // For example, you can use the addToCart function like this (you might already have a button for this):
+    // addToCart({ id: 1, name: 'Product Name', price: 29.99, quantity: 1 });
+
+    // Optional: Handle cart removal (if you have a button for removing items from the cart)
+    function removeFromCart(productId) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Filter out the product from the cart
+        cart = cart.filter(item => item.id !== productId);
+
+        // Save the updated cart back to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update the cart display
+        updateCartDisplay();
+    }
+});
+
 
 // Function to update the cart data in localStorage
 function updateLocalStorage() {
@@ -102,33 +190,6 @@ function updateCartSummary() {
     document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
     document.getElementById('finalTotal').textContent = finalTotal.toFixed(2);
 }
-document.addEventListener('DOMContentLoaded', function () {
-  // Get the checkout button
-  const checkoutBtn = document.getElementById('checkoutbutton');
-
-  // Check if the button exists
-  if (checkoutBtn) {
-    // Add event listener for click event
-    checkoutBtn.addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent default behavior (if it's a form)
-
-      // Check if the cart is not empty (you might need to adjust this)
-      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-      if (cartItems.length === 0) {
-        alert('Your cart is empty! Please add items before proceeding.');
-        return;
-      }
-
-      // Optionally, display a confirmation modal or something before redirecting
-      const confirmCheckout = confirm('Are you sure you want to proceed to checkout?');
-      if (confirmCheckout) {
-        // Proceed to the checkout page or handle checkout process
-        window.location.href = '/checkout';  // Redirect to checkout page
-      }
-    });
-  }
-});
- <button id="checkoutButton" class="add-to-cart">Proceed to Checkout</button>
 
 
 
