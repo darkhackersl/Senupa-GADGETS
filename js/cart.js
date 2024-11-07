@@ -129,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+ <button id="checkoutButton" class="add-to-cart">Proceed to Checkout</button>
+
 
 
 // Redirect to checkout page
