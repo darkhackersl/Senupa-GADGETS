@@ -47,7 +47,7 @@ function updateCartDisplay() {
 
     if (cart.length === 0) {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-        updateCartSummary();  // Update summary when cart is empty
+        updateCartSummary();
         return;
     }
 
@@ -66,8 +66,15 @@ function updateCartDisplay() {
         cartContainer.appendChild(cartItem);
     });
 
+    // Add a checkout button
+    const checkoutButton = document.createElement('button');
+    checkoutButton.textContent = "Proceed to Checkout";
+    checkoutButton.onclick = () => window.location.href = "checkout.html";
+    cartContainer.appendChild(checkoutButton);
+
     updateCartSummary();
 }
+
 
 function updateCartSummary() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
