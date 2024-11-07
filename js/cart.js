@@ -60,11 +60,10 @@ function updateCartDisplay() {
     cartContainer.innerHTML = '';
 
     // Check if cart is empty and show a message if it is
-    if (cart.length === 0) {
-        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-        updateCartSummary();
-        return;
-    }
+if (cartItems.length === 0) {
+  alert('Your cart is empty! Please add items before proceeding.');
+  return;
+}
 
     // Display each item in the cart
     cart.forEach(item => {
