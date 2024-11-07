@@ -5,42 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MR Gadgets | Online Store</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-   <header>
-    <div class="container">
-        <h1>MR Gadgets</h1>
-       <nav class="scroll-menu">
-            <a href="index.html"><i class="fas fa-home"></i> Home</a>
-            <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
-            <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-            <a href="login.html"><i class="fas fa-user"></i> Login</a>
-            <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
-        </nav>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search products...">
-            <button id="search-button">Search</button>
+    <header>
+        <div class="container">
+            <h1>MR Gadgets</h1>
+            <nav class="mega-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="products.html">Products</a>
+                        <div class="dropdown">
+                            <div class="dropdown-content">
+                                <div>
+                                    <h3>Categories</h3>
+                                    <a href="#">Smartphones</a>
+                                    <a href="#">Laptops</a>
+                                    <a href="#">Accessories</a>
+                                </div>
+                                <div>
+                                    <h3>Brands</h3>
+                                    <a href="#">Apple</a>
+                                    <a href="#">Samsung</a>
+                                    <a href="#">Sony</a>
+                                </div>
+                                <div>
+                                    <h3>Deals</h3>
+                                    <a href="#">New Arrivals</a>
+                                    <a href="#">Clearance</a>
+                                    <a href="#">Bundle Offers</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-</header>
+    </header>
     <main>
         <div class="container">
             <h2>Welcome to MR Gadgets!</h2>
             <p>Your one-stop shop for the latest electronic items.</p>
         </div>
-
-
-       
-    
     </main>
    
     <!-- Add these script tags before the closing </body> tag -->
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth-compat.js"></script>
-<script src="js/firebase-config.js"></script>
-<script src="js/auth.js"></script>
-<!-- Your other scripts -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <!-- Your other scripts -->
 </body>
 </html>
