@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password, username)
             .then((userCredential) => {
                 const user = userCredential.user;
                 
