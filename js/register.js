@@ -35,16 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create user in Firebase
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
+                // Send verification email
+                return userCredential.user.sendEmailVerification({
+                    url: 'https://scintillating-gnome-48c89a.netlify.app/login', // Your login page URL
+                    handleCodeInApp: true
+                });
+            })
+            .then(() => {
                 // Add additional user info to Firebase
                 return firebase.firestore().collection('users').doc(userCredential.user.uid).set({
                     username: username,
                     email: email,
                     phone: phone,
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    emailVerified: false
                 });
             })
             .then(() => {
-                alert('Registration successful! Please login.');
+                alert('Registration successful! Please check your email to verify your account.');
                 window.location.href = 'login.html';
             })
             .catch((error) => {
