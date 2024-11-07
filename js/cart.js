@@ -6,21 +6,18 @@ class ShoppingCart {
         this.initializeEventListeners();
     }
 
-    // Initialize event listeners
     initializeEventListeners() {
         document.addEventListener('DOMContentLoaded', () => {
             this.updateCartDisplay();
             this.updateCartIcon();
         });
 
-        // Add event listener for checkout button if it exists
         const checkoutButton = document.getElementById('checkoutButton');
         if (checkoutButton) {
             checkoutButton.addEventListener('click', () => this.proceedToCheckout());
         }
     }
 
-    // Add item to cart
     addToCart(productId) {
         try {
             const product = products.find(p => p.id === productId);
@@ -55,7 +52,6 @@ class ShoppingCart {
         }
     }
 
-    // Remove item from cart
     removeFromCart(productId) {
         try {
             const index = this.cart.findIndex(item => item.id === productId);
@@ -78,7 +74,6 @@ class ShoppingCart {
         }
     }
 
-    // Clear entire cart
     clearCart() {
         this.cart = [];
         this.saveCart();
@@ -87,12 +82,10 @@ class ShoppingCart {
         this.showNotification('Cart cleared');
     }
 
-    // Save cart to localStorage
     saveCart() {
         localStorage.setItem('cart', JSON.stringify(this.cart));
     }
 
-    // Update cart display
     updateCartDisplay() {
         const cartContainer = document.getElementById('cartContainer');
         if (!cartContainer) return;
@@ -139,7 +132,6 @@ class ShoppingCart {
             cartContainer.appendChild(cartItem);
         });
 
-        // Add cart summary
         const summarySection = document.createElement('div');
         summarySection.className = 'cart-summary';
         summarySection.innerHTML = `
@@ -158,7 +150,6 @@ class ShoppingCart {
         cartContainer.appendChild(summarySection);
     }
 
-    // Update cart icon in header
     updateCartIcon() {
         const cartIcon = document.querySelector('.cart-icon');
         if (cartIcon) {
@@ -168,12 +159,10 @@ class ShoppingCart {
         }
     }
 
-    // Get total number of items in cart
     getTotalItems() {
         return this.cart.reduce((sum, item) => sum + item.quantity, 0);
     }
 
-    // Show notification
     showNotification(message, type = 'success') {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
@@ -185,14 +174,12 @@ class ShoppingCart {
         }, 3000);
     }
 
-    // Proceed to checkout
     proceedToCheckout() {
         if (this.cart.length === 0) {
             this.showNotification('Your cart is empty', 'error');
             return;
         }
 
-        // Check if user is logged in
         const isLoggedIn = localStorage.getItem('userEmail');
         if (!isLoggedIn) {
             this.showNotification('Please login to checkout', 'error');
@@ -200,13 +187,9 @@ class ShoppingCart {
             return;
         }
 
-        // Proceed to checkout page
         window.location.href = 'checkout.html';
     }
 }
 
-// Initialize shopping cart
 const shoppingCart = new ShoppingCart();
-
-// Make it globally accessible
 window.shoppingCart = shoppingCart;
