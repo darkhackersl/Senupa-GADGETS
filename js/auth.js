@@ -41,55 +41,63 @@ function logout() {
 
 // auth.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
-    const userInfo = document.getElementById('userInfo');
-    const displayName = document.getElementById('displayName');
-    const displayEmail = document.getElementById('displayEmail');
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+    // Get DOM elements
+    const userInfoContainer = document.getElementById('userInfoContainer');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const logoutLink = document.getElementById('logoutLink');
 
-    // Check if user is logged in
+    // Check authentication state
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+            console.log('User is logged in:', user.email); // Debug log
+            
             // Get user data from Firestore
             firebase.firestore().collection('users').doc(user.uid).get()
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
+                        console.log('User data:', userData); // Debug log
+
+                        // Update display
+                        userInfoContainer.style.display = 'inline-block';
+                        userNameDisplay.textContent = `Welcome, ${userData.username}`;
+                        userEmailDisplay.textContent = user.email;
                         
-                        // Show user info
-                        userInfo.style.display = 'inline-block';
-                        displayName.textContent = userData.username;
-                        displayEmail.textContent = user.email;
-                        
-                        // Hide login/register, show logout
-                        loginBtn.style.display = 'none';
-                        registerBtn.style.display = 'none';
-                        logoutBtn.style.display = 'inline-block';
+                        // Update navigation links
+                        if (loginLink) loginLink.style.display = 'none';
+                        if (registerLink) registerLink.style.display = 'none';
+                        if (logoutLink) logoutLink.style.display = 'inline-block';
                     }
                 })
                 .catch((error) => {
                     console.error("Error getting user data:", error);
                 });
         } else {
-            // User is logged out
-            userInfo.style.display = 'none';
-            loginBtn.style.display = 'inline-block';
-            registerBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
+            console.log('No user logged in'); // Debug log
+            
+            // Reset display for logged out state
+            if (userInfoContainer) userInfoContainer.style.display = 'none';
+            if (loginLink) loginLink.style.display = 'inline-block';
+            if (registerLink) registerLink.style.display = 'inline-block';
+            if (logoutLink) logoutLink.style.display = 'none';
         }
     });
 
-    // Logout functionality
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
+    // Handle logout
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
             e.preventDefault();
-            firebase.auth().signOut().then(() => {
-                window.location.href = 'login.html';
-            }).catch((error) => {
-                console.error('Logout error:', error);
-            });
+            firebase.auth().signOut()
+                .then(() => {
+                    console.log('User signed out successfully'); // Debug log
+                    window.location.href = 'login.html';
+                })
+                .catch((error) => {
+                    console.error('Logout error:', error);
+                });
         });
     }
 });
