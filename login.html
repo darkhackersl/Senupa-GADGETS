@@ -8,35 +8,26 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
+       <header>
         <div class="container">
-            <h1>MR Gadgets | Online Store</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="cart.html">Cart</a>
-                <a href="register.html">Register</a>
+            <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+            <nav class="scroll-menu">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                <div class="user-section">
+                    <div id="userInfo" style="display: none;">
+                        <span id="welcomeMessage"></span>
+                        <span id="userEmail"></span>
+                    </div>
+                    <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+                    <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="user-orders.html" id="ordersBtn" style="display: none;">My Orders</a>
+                </div>
             </nav>
         </div>
     </header>
-    <main>
-       <!-- login.html -->
-<div class="form-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
-    </form>
-    <button id="resendVerificationBtn" style="display: none;">Resend Verification Email</button>
-</div>
-         <div id="userInfo" style="display: none;">
-                <h3>Welcome, <span id="userName"></span>!</h3>
-                <a href="orders.html">View Your Orders</a>
-            </div>
-    </main>
-
     <!-- Firebase SDK -->
 <!-- Add these before closing </body> tag -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -47,5 +38,29 @@
 <!-- Add login.js or register.js depending on the page -->
  
     <script src="js/login.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const userInfo = document.getElementById('userInfo');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const ordersBtn = document.getElementById('ordersBtn');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const userEmail = document.getElementById('userEmail');
+
+            if (userData) {
+                // User is logged in
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                userInfo.style.display = 'block';
+                logoutBtn.style.display = 'block';
+                ordersBtn.style.display = 'block';
+
+                welcomeMessage.textContent = `Welcome, ${userData.name}!`;
+                userEmail.textContent = userData.email;
+            }
+        });
+    </script>
 </body>
 </html>
