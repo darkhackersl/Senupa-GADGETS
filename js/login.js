@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-         const username = document.getElementById('username').value;
 
         if (!email || !password) {
             alert('Please fill in all fields');
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
 
-        firebase.auth().signInWithEmailAndPassword(email, password, username)
+        firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 
