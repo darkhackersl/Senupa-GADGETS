@@ -1,43 +1,133 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - MR Gadgets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login-form input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .login-form button {
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-form button:hover {
+            background-color: #555;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .social-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-login button {
+            margin: 0 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .google-login {
+            background-color: #db4437;
+            color: white;
+        }
+        .facebook-login {
+            background-color: #4267B2;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-       <header>
+    <header>
         <div class="container">
-            <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
-            <nav class="scroll-menu">
-                <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
-                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-                <div class="user-section">
-                    <div id="userInfo" style="display: none;">
-                        <span id="welcomeMessage"></span>
-                        <span id="userEmail"></span>
-                    </div>
-                    <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
-                    <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
-                    <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    <a href="user-orders.html" id="ordersBtn" style="display: none;">My Orders</a>
-                </div>
+            <h1>MR Gadgets | Online Store</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="register.html">Register</a>
             </nav>
         </div>
     </header>
+
+    <div class="login-container">
+        <form id="loginForm" class="login-form">
+            <h2>Login to MR Gadgets</h2>
+            
+            <div id="errorMessage" class="error-message"></div>
+            
+            <input 
+                type="email" 
+                id="email" 
+                placeholder="Email Address" 
+                required 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            >
+            
+            <input 
+                type="password" 
+                id="password" 
+                placeholder="Password" 
+                required 
+                minlength="6"
+            >
+            
+            <button type="submit">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            
+            <div class="social-login">
+                <button type="button" class="google-login" id="googleLogin">
+                    <i class="fab fa-google"></i> Login with Google
+                </button>
+                <button type="button" class="facebook-login" id="facebookLogin">
+                    <i class="fab fa-facebook"></i> Login with Facebook
+                </button>
+            </div>
+            
+            <p>
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a> | 
+                <a href="register.html">Create an Account</a>
+            </p>
+        </form>
+    </div>
+
     <!-- Firebase SDK -->
-<!-- Add these before closing </body> tag -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="js/firebase-config.js"></script>
-<script src="js/auth.js"></script>
-<!-- Add login.js or register.js depending on the page -->
- 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/firebase-config.js"></script>
     <script src="js/login.js"></script>
+
+
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             const userData = JSON.parse(localStorage.getItem('userData'));
