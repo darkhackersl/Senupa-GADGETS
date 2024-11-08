@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - MR Gadgets</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+            <nav class="scroll-menu">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>My Orders</h2>
+            <div id="userOrdersContainer">
+                <!-- Orders will be dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const ordersContainer = document.getElementById('userOrdersContainer');
+
+            if (!userData) {
+                // Redirect to login if no user data
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Fetch user's orders from localStorage
+            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            const userOrders = allOrders.filter(order => order.customerInfo.email === userData.email);
+
+            if (userOrders.length === 0) {
+                ordersContainer.innerHTML = '<p>You have no orders yet.</p>';
+                return;
+            }
+
+            // Display user orders
+            const ordersHTML = userOrders.map(order => `
+                <div class="order-card">
+                    <h3>Order ID: ${order.orderId}</h3>
+                    <p>Date: ${new Date(order.orderDate).toLocaleString()}</p>
+                    <p>Total Amount: $${order.totalAmount.toFixed(2)}</p>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <img src="${item.image}" alt="${item.name}" />
+                                <p>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            ordersContainer.innerHTML = ordersHTML;
+        });
+    </script>
+</body>
+</html>
