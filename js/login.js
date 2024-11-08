@@ -36,10 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Please verify your email before logging in.');
                 }
 
-                // Email is verified, proceed with login
-                localStorage.setItem('userEmail', user.email);
-                localStorage.setItem('userId', user.uid);
-                window.location.href = 'index.html';
+                                // Fetch user additional details from Firestore
+                return firebase.firestore().collection('users').doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            
+                            // Store user data in localStorage
+                            localStorage.setItem('userData', JSON.stringify({
+                                uid: user.uid,
+                                email: user.email,
+                                name: userData.name || 'User'
+                            }));
+
+                            // Redirect to index with user info
+                            window.location.href = 'index.html';
+                        }
+                    });
             })
             .catch((error) => {
                 console.error('Login error:', error);
