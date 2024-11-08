@@ -1,4 +1,4 @@
-// login.js
+// js/login.js
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     
@@ -8,80 +8,93 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        if (!email || !password) {
-            alert('Please fill in all fields');
-            return;
-        }
-
-        // Show loading state
+        // Disable submit button and show loading state
         const submitButton = this.querySelector('button');
         submitButton.disabled = true;
         submitButton.textContent = 'Logging in...';
 
+        // Firebase Authentication
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 
+                // Check email verification
                 if (!user.emailVerified) {
-                    // If email isn't verified, send a new verification email
+                    // Send verification email
                     user.sendEmailVerification({
                         url: 'https://scintillating-gnome-48c89a.netlify.app/login',
                         handleCodeInApp: true
                     }).then(() => {
                         alert('Please verify your email. A new verification link has been sent.');
+                        firebase.auth().signOut();
                         submitButton.disabled = false;
                         submitButton.textContent = 'Login';
-                        firebase.auth().signOut();
                     });
-                    throw new Error('Please verify your email before logging in.');
+                    return;
                 }
 
-                                // Fetch user additional details from Firestore
+                // Fetch additional user data from Firestore
                 return firebase.firestore().collection('users').doc(user.uid).get()
                     .then((doc) => {
                         if (doc.exists) {
                             const userData = doc.data();
                             
                             // Store user data in localStorage
-                            localStorage.setItem('userData', JSON.stringify({
-                                uid: user.uid,
-                                email: user.email,
-                                name: userData.name || 'User'
-                            }));
+                            localStorage.setItem('userEmail', user.email);
+                            localStorage.setItem('userId', user.uid);
+                            localStorage.setItem('userName', userData.username || 'User');
 
-                            // Redirect to index with user info
+                            // Redirect to home page
                             window.location.href = 'index.html';
                         }
                     });
             })
             .catch((error) => {
-                console.error('Login error:', error);
-                alert(error.message);
+                // Handle different error types
+                let errorMessage = 'Login failed. Please try again.';
+                
+                switch(error.code) {
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password. Please try again.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many login attempts. Please try again later.';
+                        break;
+                }
+
+                // Show error message
+                alert(errorMessage);
+                
+                // Reset button
                 submitButton.disabled = false;
                 submitButton.textContent = 'Login';
+                
+                console.error('Login error:', error);
             });
     });
-});
-// Add this to login.js
-document.getElementById('resendVerificationBtn')?.addEventListener('click', function() {
-    const email = document.getElementById('email').value;
-    if (!email) {
-        alert('Please enter your email address');
-        return;
-    }
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            return userCredential.user.sendEmailVerification({
-                url: 'https://scintillating-gnome-48c89a.netlify.app/login',
-                handleCodeInApp: true
-            });
-        })
-        .then(() => {
-            alert('Verification email has been resent. Please check your inbox.');
-        })
-        .catch((error) => {
-            console.error('Error sending verification email:', error);
-            alert(error.message);
+    // Resend Verification Email
+    const resendVerificationBtn = document.getElementById('resendVerificationBtn');
+    if (resendVerificationBtn) {
+        resendVerificationBtn.addEventListener('click', function() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                user.sendEmailVerification({
+                    url: 'https://scintillating-gnome-48c89a.netlify.app/login',
+                    handleCodeInApp: true
+                }).then(() => {
+                    alert('Verification email sent. Please check your inbox.');
+                }).catch((error) => {
+                    console.error('Error sending verification email:', error);
+                    alert('Failed to send verification email. Please try again.');
+                });
+            }
         });
+    }
 });
