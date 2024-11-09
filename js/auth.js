@@ -101,3 +101,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize orders for testing
+    const orders = [
+        {
+            customerInfo: { email: 'user@example.com' },
+            orderId: 'ORD12345',
+            orderDate: '2023-01-01T00:00:00Z',
+            total: 100.00,
+            status: 'Delivered'
+        },
+        // More orders...
+    ];
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Your existing login code...
+});
