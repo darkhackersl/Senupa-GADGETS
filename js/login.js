@@ -36,12 +36,15 @@ firebase.auth().signInWithEmailAndPassword(email, password)
     const user = userCredential.user;
     // Store user email in localStorage
     localStorage.setItem('userEmail', user.email);
+    // Optionally store user name or other info if available
+    localStorage.setItem('userName', user.displayName || 'User '); // Adjust as necessary
     // Redirect to the orders page
     window.location.href = 'orders.html'; // Redirect to orders page
 })
 .catch((error) => {
     console.error('Login Error:', error);
 });
+
 
         // Perform login
         firebase.auth().signInWithEmailAndPassword(email, password)
