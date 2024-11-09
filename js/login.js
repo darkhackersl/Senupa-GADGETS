@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     sessionStorage.setItem('userOrders', JSON.stringify(orders));
 
                     // Redirect to user orders page
-                    window.location.href = 'user-orders.html'; // Change to your desired redirection
+                    window.location.href = 'index.html'; // Change to your desired redirection
                 });
             })
             .catch(error => {
