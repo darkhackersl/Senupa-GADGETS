@@ -1,47 +1,10 @@
-// js/auth.js
-
-// Function to update navigation based on auth state
-function updateNavigation() {
-    const user = firebase.auth().currentUser;
-    const loginLink = document.querySelector('nav a[href="login.html"]');
-    const registerLink = document.querySelector('nav a[href="register.html"]');
-    const logoutLink = document.getElementById('logoutButton');
-
-    if (user) {
-        if (loginLink) loginLink.style.display = 'none';
-        if (registerLink) registerLink.style.display = 'none';
-        if (!logoutLink) {
-            // Add logout button if it doesn't exist
-            const nav = document.querySelector('nav');
-            const logoutBtn = document.createElement('a');
-            logoutBtn.id = 'logoutButton';
-            logoutBtn.href = '#';
-            logoutBtn.textContent = 'Logout';
-            logoutBtn.onclick = logout;
-            nav.appendChild(logoutBtn);
-        }
-    } else {
-        if (loginLink) loginLink.style.display = '';
-        if (registerLink) registerLink.style.display = '';
-        if (logoutLink) logoutLink.remove();
-    }
-}
-
-// Function to handle logout
-function logout() {
-    firebase.auth().signOut()
-        .then(() => {
-            localStorage.removeItem('userEmail');
-            window.location.href = 'login.html';
-        })
-        .catch((error) => {
-            alert('Error logging out: ' + error.message);
-        });
-}
-
-// auth.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
+    // Ensure Firebase is initialized
+    if (!firebase.apps.length) {
+        console.error('Firebase is not initialized');
+        return;
+    }
+
     const userInfo = document.getElementById('userInfo');
     const welcomeMessage = document.getElementById('welcomeMessage');
     const userEmailDisplay = document.getElementById('userEmail');
@@ -52,20 +15,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check authentication state
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            // User is logged in
-            console.log('User logged in:', user.email);
-            
-            // Get user data from Firestore
+            console.log('User  logged in:', user.email);
             firebase.firestore().collection('users').doc(user.uid).get()
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        
-                        // Show user info
                         userInfo.style.display = 'block';
                         welcomeMessage.textContent = `Welcome, ${userData.username}!`;
                         userEmailDisplay.textContent = user.email;
-                        
+
                         // Update navigation buttons
                         loginBtn.style.display = 'none';
                         registerBtn.style.display = 'none';
@@ -76,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error("Error getting user data:", error);
                 });
         } else {
-            // User is logged out
             userInfo.style.display = 'none';
             loginBtn.style.display = 'inline-block';
             registerBtn.style.display = 'inline-block';
@@ -88,10 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            
             firebase.auth().signOut()
                 .then(() => {
-                    console.log('User signed out successfully');
+                    console.log('User  signed out successfully');
                     window.location.href = 'login.html';
                 })
                 .catch((error) => {
