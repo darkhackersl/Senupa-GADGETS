@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             }));
 
                             // Redirect to home page
-                            window.location.href = 'user-orders.html';
+                            window.location.href = 'index.html';
                         } else {
                             showError('User data not found');
                         }
