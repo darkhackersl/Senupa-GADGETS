@@ -45,14 +45,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                // Successful login, redirect to home page or user dashboard
-                window.location.href = 'index.html'; // Change to your desired redirection
+                // Successful login, fetch user orders
+                fetchUser Orders(user.email).then(orders => {
+                    // Store orders in session storage or pass to the orders page
+                    sessionStorage.setItem('userOrders', JSON.stringify(orders));
+
+                    // Redirect to user orders page
+                    window.location.href = 'user-orders.html'; // Change to your desired redirection
+                });
             })
             .catch(error => {
                 handleLoginError(error);
                 toggleSubmitButton(submitButton, false, 'Login');
             });
     });
+
+    // Function to fetch user orders
+    function fetchUser Orders(email) {
+        return new Promise((resolve, reject) => {
+            // Fetch orders from localStorage
+            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            const userOrders = allOrders.filter(order => order.customerInfo.email === email);
+
+            if (userOrders.length > 0) {
+                resolve(userOrders);
+            } else {
+                resolve([]); // No orders found
+            }
+        });
+    };
 
     // Function to display error messages
     function showError(message) {
