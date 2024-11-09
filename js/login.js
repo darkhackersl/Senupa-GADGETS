@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Fetch user additional data
-                return firebase.firestore().collection('users').doc(user.uid).get()
+                return firebase.firestore().collection('users').doc (user.uid).get()
                     .then((doc) => {
                         if (doc.exists) {
                             const userData = doc.data();
                             
                             // Store user data
                             localStorage.setItem('userData', JSON.stringify({
-                                name: userData.username || 'User ',
+                                name: userData.username || 'User  ',
                                 email: user.email,
                                 uid: user.uid
                             }));
@@ -126,7 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const ordersHTML = orders.map(order => `
             <div class="order-card">
                 <h3>Order ID: ${order.orderId}</h3>
-                <p>Date: ${new Date(order.orderDate).toLocaleDateString()}</ <p>Total: $${order.total.toFixed(2)}</p>
+                <p>Date: ${new Date(order.orderDate).toLocaleDateString()}</p>
+                <p>Total: $${order.total.toFixed(2)}</p>
                 <p>Status: ${order.status}</p>
             </div>
         `).join('');
