@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const email = document.getElementById('email').value.trim();
+        const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const submitButton = this.querySelector('button[type="submit"]');
         const errorMessageEl = document.getElementById('errorMessage');
@@ -30,6 +30,19 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
         clearError();
 
+        // Assuming this is part of your login function
+firebase.auth().signInWithEmailAndPassword(email, password)
+.then((userCredential) => {
+    const user = userCredential.user;
+    // Store user email in localStorage
+    localStorage.setItem('userEmail', user.email);
+    // Redirect to the orders page
+    window.location.href = 'orders.html'; // Redirect to orders page
+})
+.catch((error) => {
+    console.error('Login Error:', error);
+});
+
         // Perform login
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
@@ -37,11 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Check email verification
                 if (!user.emailVerified) {
-                    showError('Please verify your email. A verification link has been sent to your email.');
+                    // Send verification email
                     return user.sendEmailVerification({
                         url: window.location.origin + '/login.html',
                         handleCodeInApp: true
                     }).then(() => {
+                        showError('Please verify your email. A new verification link has been sent.');
                         return firebase.auth().signOut();
                     });
                 }
@@ -54,19 +68,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Store user data
                             localStorage.setItem('userData', JSON.stringify({
-                                name: userData.username || 'User ',
+                                name: userData.username || 'User',
                                 email: user.email,
                                 uid: user.uid
                             }));
 
                             // Redirect to home page
-                            window.location.href = 'index.html';
+                            window.location.href = 'orders.html';
                         } else {
-                            showError('User  data not found');
+                            showError('User data not found');
                         }
                     });
             })
             .catch((error) => {
+                // Detailed error handling
                 console.error('Login Error:', error);
                 
                 let errorMessage = 'Login failed. Please try again.';
