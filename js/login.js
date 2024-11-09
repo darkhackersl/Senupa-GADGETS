@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const email = document.getElementById('email').value;
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const submitButton = this.querySelector('button[type="submit"]');
         const errorMessageEl = document.getElementById('errorMessage');
@@ -37,12 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Check email verification
                 if (!user.emailVerified) {
-                    // Send verification email
+                    showError('Please verify your email. A verification link has been sent to your email.');
                     return user.sendEmailVerification({
                         url: window.location.origin + '/login.html',
                         handleCodeInApp: true
                     }).then(() => {
-                        showError('Please verify your email. A new verification link has been sent.');
                         return firebase.auth().signOut();
                     });
                 }
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Store user data
                             localStorage.setItem('userData', JSON.stringify({
-                                name: userData.username || 'User',
+                                name: userData.username || 'User ',
                                 email: user.email,
                                 uid: user.uid
                             }));
@@ -63,12 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Redirect to home page
                             window.location.href = 'index.html';
                         } else {
-                            showError('User data not found');
+                            showError('User  data not found');
                         }
                     });
             })
             .catch((error) => {
-                // Detailed error handling
                 console.error('Login Error:', error);
                 
                 let errorMessage = 'Login failed. Please try again.';
