@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+
     // Function to fetch user orders
     function fetchUser Orders(email) {
         return new Promise((resolve, reject) => {
@@ -74,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     };
+});
+
 
     // Function to display error messages
     function showError(message) {
