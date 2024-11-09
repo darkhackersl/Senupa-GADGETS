@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Successful login, redirect to home page or user dashboard
-                window.location.href = 'index.html'; // Change to your desired redirection
+                window.location.href = 'user-orders.html'; // Change to your desired redirection
             })
             .catch(error => {
                 handleLoginError(error);
