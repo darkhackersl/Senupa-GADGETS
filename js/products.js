@@ -95,7 +95,7 @@ function displayProducts() {
             <img src="${product.image}" alt="${product.name}">
             <div class="product-info">
                 <h3>${product.name}</h3>
-                <p class="price">$${product.price.toFixed(2)}</p>
+                <p class="price">Rs.${product.price.toFixed(2)}</p>
                 <p>${product.description}</p>
                 <button onclick="addToCart(${product.id})" class="add-to-cart">
                     Add to Cart
