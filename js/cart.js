@@ -56,7 +56,7 @@ function updateCartDisplay() {
             <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-info">
                 <h3>${item.name}</h3>
-                <p>Price: $${item.price.toFixed(2)}</p>
+                <p>Price: Rs.${item.price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
                 <div class="quantity-controls">
                     <button onclick="updateQuantity(${item.id}, -1)">-</button>
