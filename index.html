@@ -20,7 +20,7 @@
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
             <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
             <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-            <a href="track-order.html"><i class="fas fa-truck"></i> Track Order</a> <!-- New Track Order Link -->
+            <a href="track-order.html"><i class="fas fa-truck"></i> Track Order</a>
             <div class="user-section">
                 <div id="userInfo" style="display: none;">
                     <span id="welcomeMessage"></span>
@@ -29,6 +29,9 @@
                 <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
                 <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
                 <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <span id="userIcon" style="display: none;">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: #fff;"></i>
+                </span>
             </div>
         </nav>
     </div>
@@ -60,7 +63,29 @@
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
-            autoplaySpeed: 1500 });
+            autoplaySpeed: 1500 
+        });
+
+        // Check if user is logged in
+        const userEmail = localStorage.getItem('userEmail');
+        console.log('User  Email from localStorage:', userEmail); // Debugging line
+        if (userEmail) {
+            $('#userInfo').show();
+            $('#welcomeMessage').text(`Welcome, ${userEmail}`);
+            $('#userEmail').text(userEmail);
+            $('#loginBtn').hide();
+            $('#registerBtn').hide();
+            $('#logoutBtn').show();
+            $('#userIcon').show(); // Ensure this line is executed
+        } else {
+            console.log('User  is not logged in.'); // Debugging line
+        }
+
+        // Logout functionality
+        $('#logoutBtn').click(function() {
+            localStorage.removeItem('userEmail');
+            location.reload(); // Reload the page to update the UI
+        });
     });
 </script>
 </body>
