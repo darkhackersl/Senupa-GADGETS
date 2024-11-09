@@ -60,15 +60,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-    // Function to fetch user orders
-    function fetchUser Orders(email) {
-        return new Promise((resolve) => {
-            // Fetch orders from localStorage
-            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
-            const userOrders = allOrders.filter(order => order.customerInfo.email === email);
-            resolve(userOrders);
-        });
-    }
+// Function to fetch user orders
+function fetchUser Orders(email) {
+    return new Promise((resolve) => {
+        // Fetch orders from localStorage
+        const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+        const userOrders = allOrders.filter(order => order.customerInfo.email === email);
+        resolve(userOrders);
+    });
+}
 
     // Function to display error messages
     function showError(message) {
