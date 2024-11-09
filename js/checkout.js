@@ -34,7 +34,7 @@ function displayCartItems() {
             <div class="item-details">
                 <h4>${item.name}</h4>
                 <p>Quantity: ${item.quantity}</p>
-                <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+                <p>Price: Rs.${(item.price * item.quantity).toFixed(2)}</p>
             </div>
         </div>
     `).join('');
