@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 email: user.email,
                                 uid: user.uid
                             }));
+                               // Redirect to home page
+                            window.location.href = 'user-orders.html';
 
                             // Fetch and display user orders
                             fetchUser Orders(user.email).then(orders => {
