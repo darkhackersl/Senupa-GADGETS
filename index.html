@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MR Gadgets | Online Store</title>
     <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-        <script src="js/jQuery3.4.1.js"></script>
+    <script src="js/jQuery3.4.1.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 </head>
@@ -20,7 +20,7 @@
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
             <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
             <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-            <!-- User info container -->
+            <a href="track-order.html"><i class="fas fa-truck"></i> Track Order</a> <!-- New Track Order Link -->
             <div class="user-section">
                 <div id="userInfo" style="display: none;">
                     <span id="welcomeMessage"></span>
@@ -33,51 +33,35 @@
         </nav>
     </div>
 </header>
-    <main>
-        
-        <div class="container">
-            <h2>❝𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐌𝐑 𝐆𝐚𝐝𝐠𝐞𝐭𝐬!❞</h2>
-            <p>𝐘𝐨𝐮𝐫 𝐨𝐧𝐞-𝐬𝐭𝐨𝐩 𝐬𝐡𝐨𝐩 𝐟𝐨𝐫 𝐭𝐡𝐞 𝐥𝐚𝐭𝐞𝐬𝐭 𝐞𝐥𝐞𝐜𝐭𝐫𝐨𝐧𝐢𝐜 𝐢𝐭𝐞𝐦𝐬. 𝐌𝐑 𝐆𝐚𝐝𝐠𝐞𝐭𝐬™.</p>
-        </div>
-          <!-- SLIDER -->
+<main>
+    <div class="container">
+        <h2>❝𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐌𝐑 𝐆𝐚𝐝𝐠𝐞𝐭𝐬!❞</h2>
+        <p>𝐘𝐨𝐮𝐫 𝐨𝐧𝐞-𝐬𝐭𝐨𝐩 𝐬𝐡𝐨𝐩 𝐟𝐨𝐫 𝐭𝐡𝐞 𝐥𝐚𝐭𝐞𝐬𝐭 𝐞𝐥𝐞𝐜𝐭𝐫𝐨𝐧𝐢𝐜 𝐢𝐭𝐞𝐦𝐬. 𝐌𝐑 𝐆𝐚𝐝𝐠𝐞𝐭𝐬™.</p>
+    </div>
+    <!-- SLIDER -->
     <div id="2"></div>
     <script>
         load("slider.html");
-        function load(url)
-        {
+        function load(url) {
             req = new XMLHttpRequest();
             req.open("GET", url, false);
             req.send(null);
             document.getElementById(2).innerHTML = req.responseText;
         }
     </script>
-
-     
 </div>
-    </main>
-    <!-- slider JS START -->
+</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 <script>
-    $(document).ready(function()
-    {
-    $('#containerSlider').slick({
-        dots: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 1500,
-        });
+    $(document).ready(function() {
+        $('#containerSlider').slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1500 });
     });
 </script>
-<!-- slider JS ENDS -->
-   
-    <!-- Add these script tags before the closing </body> tag -->
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth-compat.js"></script>
-    <script src="js/firebase-config.js"></script>
-    <script src="js/auth.js"></script>
-    <!-- Your other scripts -->
 </body>
 </html>
