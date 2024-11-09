@@ -15,29 +15,24 @@
                 <a href="index.html"><i class="fas fa-home"></i> Home</a>
                 <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
                 <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                <a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <h2>My Orders</h2>
-            <div id="userOrdersContainer">
-                <!-- Orders will be dynamically populated here -->
-            </div>
+    <main class="container">
+        <h2>My Orders</h2>
+        <div id="userOrdersContainer">
+            <!-- Orders will be dynamically populated here -->
         </div>
     </main>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="js/firebase-config.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
+            const userEmail = localStorage.getItem('userEmail');
             const ordersContainer = document.getElementById('userOrdersContainer');
 
-            if (!userData) {
+            if (!userEmail) {
                 // Redirect to login if no user data
                 window.location.href = 'login.html';
                 return;
@@ -45,7 +40,7 @@
 
             // Fetch user's orders from localStorage
             const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
-            const userOrders = allOrders.filter(order => order.customerInfo.email === userData.email);
+            const userOrders = allOrders.filter(order => order.customerInfo.email === userEmail);
 
             if (userOrders.length === 0) {
                 ordersContainer.innerHTML = '<p>You have no orders yet.</p>';
