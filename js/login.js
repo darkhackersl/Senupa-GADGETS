@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const email = document.getElementById('email').value;
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         const submitButton = this.querySelector('button[type="submit"]');
         const errorMessageEl = document.getElementById('errorMessage');
@@ -37,12 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Check email verification
                 if (!user.emailVerified) {
-                    // Send verification email
+                    showError('Please verify your email. A verification link has been sent to your email.');
                     return user.sendEmailVerification({
                         url: window.location.origin + '/login.html',
                         handleCodeInApp: true
                     }).then(() => {
-                        showError('Please verify your email. A new verification link has been sent.');
                         return firebase.auth().signOut();
                     });
                 }
@@ -55,15 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Store user data
                             localStorage.setItem('userData', JSON.stringify({
-                                name: userData.username || 'User',
+                                name: userData.username || 'User ',
                                 email: user.email,
                                 uid: user.uid
                             }));
 
-                            // Redirect to home page
-                            window.location.href = 'index.html';
+                            // Fetch and display user orders
+                            fetchUser Orders(user.email).then(orders => {
+                                displayUser Orders(orders);
+                            });
+
                         } else {
-                            showError('User data not found');
+                            showError('User  data not found');
                         }
                     });
             })
@@ -97,6 +99,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
             });
     });
+
+    // Fetch user orders
+    function fetchUser Orders(email) {
+        return new Promise((resolve) => {
+            // Fetch orders from localStorage
+            const allOrders = JSON.parse(localStorage.getItem('orders')) || [];
+            const userOrders = allOrders.filter(order => order.customerInfo.email === email);
+            resolve(userOrders);
+        });
+    }
+
+    // Display user orders
+    function displayUser Orders(orders) {
+        const ordersContainer = document.getElementById('ordersContainer'); // Ensure you have this element in your HTML
+        if (!ordersContainer) {
+            console.error('Orders container not found');
+            return;
+        }
+
+        if (orders.length === 0) {
+            ordersContainer.innerHTML = '<p>You have no orders yet.</p>';
+            return;
+        }
+
+        const ordersHTML = orders.map(order => `
+            <div class="order-card">
+                <h3>Order ID: ${order.orderId}</h3>
+                <p>Date: ${new Date(order.orderDate).toLocaleDateString()}</ <p>Total: $${order.total.toFixed(2)}</p>
+                <p>Status: ${order.status}</p>
+            </div>
+        `).join('');
+
+        ordersContainer.innerHTML = ordersHTML;
+    }
 
     // Error handling functions
     function showError(message) {
