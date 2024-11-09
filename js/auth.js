@@ -1,3 +1,4 @@
+// auth.js
 document.addEventListener('DOMContentLoaded', function() {
     // Ensure Firebase is initialized
     if (!firebase.apps.length) {
@@ -5,56 +6,95 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    const userInfo = document.getElementById('userInfo');
-    const welcomeMessage = document.getElementById('welcomeMessage');
-    const userEmailDisplay = document.getElementById('userEmail');
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+    const loginForm = document.getElementById('loginForm');
+    const registrationForm = document.getElementById('registrationForm');
+    const errorMessageEl = document.getElementById('errorMessage');
 
-    // Check authentication state
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log('User  logged in:', user.email);
-            firebase.firestore().collection('users').doc(user.uid).get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const userData = doc.data();
-                        userInfo.style.display = 'block';
-                        welcomeMessage.textContent = `Welcome, ${userData.username}!`;
-                        userEmailDisplay.textContent = user.email;
-
-                        // Update navigation buttons
-                        loginBtn.style.display = 'none';
-                        registerBtn.style.display = 'none';
-                        logoutBtn.style.display = 'inline-block';
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error getting user data:", error);
-                });
-        } else {
-            userInfo.style.display = 'none';
-            loginBtn.style.display = 'inline-block';
-            registerBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-        }
-    });
-
-    // Handle logout
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
+    // Handle user login
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            firebase.auth().signOut()
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const submitButton = this.querySelector('button[type="submit"]');
+
+            // Validate inputs
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+
+            // Disable button and show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            clearError();
+
+            // Perform login
+            firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(() => {
-                    console.log('User  signed out successfully');
-                    window.location.href = 'login.html';
+                    // Redirect to home page after successful login
+                    window.location.href = 'index.html';
                 })
                 .catch((error) => {
-                    console.error('Logout error:', error);
-                    alert('Error signing out: ' + error.message);
+                    console.error('Login Error:', error);
+                    showError(error.message);
+                })
+                .finally(() => {
+                    // Re-enable button
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
                 });
         });
+    }
+
+    // Handle user registration
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+
+            // Validate inputs
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+
+            // Perform registration
+            firebase.auth().createUser ;WithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    showError('Registration successful! Please verify your email.');
+                    return user.sendEmailVerification({
+                        url: window.location.origin + '/login.html',
+                        handleCodeInApp: true
+                    });
+                })
+                .catch((error) => {
+                    console.error('Registration Error:', error);
+                    showError(error.message);
+                });
+        });
+    }
+
+    // Error handling functions
+    function showError(message) {
+        if (errorMessageEl) {
+            errorMessageEl.textContent = message;
+            errorMessageEl.style.display = 'block';
+        } else {
+            console.error('Error message element not found');
+            alert(message);
+        }
+    }
+
+    function clearError() {
+        if (errorMessageEl) {
+            errorMessageEl.textContent = '';
+            errorMessageEl.style.display = 'none';
+        }
     }
 });
 
