@@ -17,7 +17,7 @@ function displayProducts(productsToDisplay = products) {
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p class="brand">Brand: ${product.brand}</p>
-                <p class="price">Price: $${product.price.toFixed(2)}</p>
+                <p class="price">Price: Rs.${product.price.toFixed(2)}</p>
                 <p class="description">${product.description}</p>
                 <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
             </div>
