@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders | MR Gadgets</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/manage-orders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="js/jQuery3.4.1.js"></script>
+    <script src="js/manage-orders.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+        <nav class="scroll-menu">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="track-order.html">Track Order</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="logout.html">Logout</a>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div class="dashboard">
+            <aside class="sidebar">
+                <h2>Dashboard Menu</h2>
+                <ul>
+                    <li><a href="dashboard.html">Overview</a></li>
+                    <li><a href="manage-products.html">Manage Products</a></li>
+                    <li><a href="manage-orders.html" class="active">Manage Orders</a></li>
+                    <li><a href="user-settings.html">User  Settings</a></li>
+                </ul>
+            </aside>
+            <div class="dashboard-content">
+                <h2>Manage Orders</h2>
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Order rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2023 MR Gadgets. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
