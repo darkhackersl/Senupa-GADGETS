@@ -8,10 +8,11 @@ const products = [
         price: 999.99,
         brand: "Apple",
         image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
-        description: "Latest iPhone with dynamic island and pro camera system.",
-        stock: 10,
+        description: "The iPhone 14 Pro and ",
+         stock: 10,
+         additionalDescription: "The iPhone 14 Pro and iPhone 14 Pro Max are smartphones that were developed and marketed by Apple Inc. They are the sixteenth generation flagship iPhones, succeeding the iPhone 13 Pro and iPhone 13 Pro Max. The devices were unveiled alongside the iPhone 14 and iPhone 14 Plus during the Apple Event at Apple Park in Cupertino, California, on September 7, 2022.[9][10] Pre-orders for the iPhone 14 Pro and 14 Pro Max began on September 9, 2022, and were made available on September 16, 2022.[11] Being, along with the iPhone 14 and 14 Plus, the last iPhones to use a Lightning port, the iPhone 14 Pro and 14 Pro Max were discontinued on September 12, 2023, following the announcement of their successors, the iPhone 15 Pro and 15 Pro Max, which replaces the Lightning port with USB-C to comply with European Commission regulations.[12][13",
          additionalImages: [
-            "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
+            "https://example.com/image1.jpg",
             "https://example.com/image2.jpg",
             "https://example.com/image3.jpg"
         ]
