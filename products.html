@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Products - MR Gadgets</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/orderdesc.css">
+    
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
@@ -59,14 +61,16 @@
         });
     </script>
     <!-- Modal HTML -->
-<div id="productModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 id="modalProductName"></h2>
-        <p id="modalProductBrand"></p>
-        <p id="modalProductPrice"></p>
-        <p id="modalProductDescription"></p>
-        <div id="modalProductImages"></div>
+    <div id="productModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalProductName"></h2>
+            <p id="modalProductBrand"></p>
+            <p id="modalProductPrice"></p>
+            <p id="modalProductDescription"></p>
+            <p id="modalAdditionalDescription" style="font-style: italic; color: #666;"></p> <!-- Additional description -->
+            <div id="modalProductImages"></div>
+        </div>
     </div>
 </div>
 </body>
