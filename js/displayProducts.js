@@ -17,8 +17,8 @@ function displayProducts(productsToDisplay = products) {
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p class="brand">Brand: ${product.brand}</p>
-                <p class="price">Price: Rs.${product.price.toFixed(2)}</p> <!-- Updated line -->
-                <p class="description">${product.description}</p>
+                <p class="price">Price: Rs.${product.price.toFixed(2)}</p>
+                <p class="description" onclick="showProductDetails(${product.id})" style="cursor: pointer; color: blue; text-decoration: underline;">${product.description}</p>
                 <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
             </div>
         `;
@@ -26,6 +26,38 @@ function displayProducts(productsToDisplay = products) {
     });
 }
 
+// Function to handle showing product details
+// Function to handle showing product details
+// Function to handle showing product details
+function showProductDetails(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // Populate modal with product details
+    document.getElementById('modalProductName').textContent = product.name;
+    document.getElementById('modalProductBrand').textContent = `Brand: ${product.brand}`;
+    document.getElementById('modalProductPrice').textContent = `Price: Rs.${product.price.toFixed(2)}`;
+    document.getElementById('modalProductDescription').textContent = product.description;
+
+    // Populate modal with additional images
+    const modalProductImages = document.getElementById('modalProductImages');
+    modalProductImages.innerHTML = ''; // Clear previous images
+    product.additionalImages.forEach(image => {
+        const imgElement = document.createElement('img');
+        imgElement.src = image;
+        imgElement.style.width = '100px'; // Set a width for the images
+        imgElement.style.margin = '5px';
+        modalProductImages.appendChild(imgElement);
+    });
+
+    // Show the modal
+    document.getElementById('productModal').style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+}
 // Function to handle the search functionality
 function searchProducts() {
     const searchInput = document.getElementById('search-input');
