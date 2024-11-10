@@ -1,0 +1,66 @@
+/* General Styles for User Settings Page */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f4f4; /* Light background color */
+}
+
+h2 {
+    color: #742d2d; /* Darker color for headings */
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    background-color: #fff; /* White background for the form */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px; /* Space between label and input */
+    color: #333; /* Darker text for labels */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Full width for inputs */
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border for inputs */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Button Styles */
+button {
+    background-color: #5bc0de; /* Bootstrap info color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #31b0d5; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    form {
+        padding: 15px; /* Smaller padding on smaller screens */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        font-size: 14px; /* Smaller font size for inputs */
+    }
+}
