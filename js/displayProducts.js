@@ -39,6 +39,10 @@ function showProductDetails(productId) {
     document.getElementById('modalProductPrice').textContent = `Price: Rs.${product.price.toFixed(2)}`;
     document.getElementById('modalProductDescription').textContent = product.description;
 
+    // Populate modal with additional description
+    const modalAdditionalDescription = document.getElementById('modalAdditionalDescription');
+    modalAdditionalDescription.textContent = product.additionalDescription;
+
     // Populate modal with additional images
     const modalProductImages = document.getElementById('modalProductImages');
     modalProductImages.innerHTML = ''; // Clear previous images
