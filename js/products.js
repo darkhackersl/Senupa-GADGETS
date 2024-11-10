@@ -3,9 +3,9 @@
 const products = [
     {
         id: 1,
-        name: "iPhone 14 Pro",
+        name: "G9 Gold Ultra 2",
         category: "Smartphones",
-        price: 999.99,
+        price: 4025.00,
         brand: "Apple",
         image: "https://files.cdn-files-a.com/uploads/9822430/2000_670c970c850a4.jpg",
         description: "The iPhone 14 Pro and ",
