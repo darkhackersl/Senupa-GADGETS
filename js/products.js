@@ -7,12 +7,33 @@ const products = [
         category: "Smartphones",
         price: 999.99,
         brand: "Apple",
-        image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
+        image: "https://files.cdn-files-a.com/uploads/9822430/2000_670c970c850a4.jpg",
         description: "The iPhone 14 Pro and ",
          stock: 10,
-         additionalDescription: "The iPhone 14 Pro and iPhone 14 Pro Max are smartphones that were developed and marketed by Apple Inc. They are the sixteenth generation flagship iPhones, succeeding the iPhone 13 Pro and iPhone 13 Pro Max. The devices were unveiled alongside the iPhone 14 and iPhone 14 Plus during the Apple Event at Apple Park in Cupertino, California, on September 7, 2022.[9][10] Pre-orders for the iPhone 14 Pro and 14 Pro Max began on September 9, 2022, and were made available on September 16, 2022.[11] Being, along with the iPhone 14 and 14 Plus, the last iPhones to use a Lightning port, the iPhone 14 Pro and 14 Pro Max were discontinued on September 12, 2023, following the announcement of their successors, the iPhone 15 Pro and 15 Pro Max, which replaces the Lightning port with USB-C to comply with European Commission regulations.[12][13",
+         additionalDescription: "🔥 G9 Gold Ultra 2
+⭐High Quality Watch
+⭐Brand G9 Ultra FENDIOR
+⭐New Sealed Pack
+⭐Best Gold Strip & Other
+⭐Ultra Black Strip Available
+⭐Hight Qulity Brand
+⭐Voluem Controler
+⭐Blutooth Call & Music
+⭐Mini Control Button Best
+⭐Hight Speaker Sound
+⭐Softwear & Notification
+⭐Qulity & Best Condition
+⭐Best Charge Life
+⭐Sport Sensor Available
+⭐Premium Qulity Item
+⭐Best Controler
+🚛 Free Delivery (COD)
+💳 Bank Payment & Cash on Deliver
+🪀 WhatsApp for more details...
+⭕ 0716389339
+😱 Special Offer!",
          additionalImages: [
-            "https://example.com/image1.jpg",
+            "https://files.cdn-files-a.com/uploads/9822430/2000_670c970c850a4.jpg",
             "https://example.com/image2.jpg",
             "https://example.com/image3.jpg"
         ]
