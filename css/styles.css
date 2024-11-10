@@ -26,7 +26,7 @@ body {
 
 /* Enhanced Header Styles */
 header {
-    background: linear-gradient(to right, #2c3e50, #3498db);
+    background: linear-gradient(to right, #e2b947, #919fa8);
     color: #ecf0f1;
     padding: 1rem 0;
     position: sticky;
@@ -229,7 +229,7 @@ nav a.active {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #db8989;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
@@ -358,6 +358,11 @@ nav a.active {
     .dropdown-content {
         flex-direction: column;
     }
+}
+.user-text {
+    font-size: 12px; /* Adjust this value as needed */
+    color: #fff; /* Ensure text color is visible against the background */
+    margin: 0 5px; /* Optional: Add some spacing between the texts */
 }
 /* Add to your styles.css */
 .verification-message {
