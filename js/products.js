@@ -10,28 +10,7 @@ const products = [
         image: "https://files.cdn-files-a.com/uploads/9822430/2000_670c970c850a4.jpg",
         description: "The iPhone 14 Pro and ",
          stock: 10,
-         additionalDescription: "🔥 G9 Gold Ultra 2
-⭐High Quality Watch
-⭐Brand G9 Ultra FENDIOR
-⭐New Sealed Pack
-⭐Best Gold Strip & Other
-⭐Ultra Black Strip Available
-⭐Hight Qulity Brand
-⭐Voluem Controler
-⭐Blutooth Call & Music
-⭐Mini Control Button Best
-⭐Hight Speaker Sound
-⭐Softwear & Notification
-⭐Qulity & Best Condition
-⭐Best Charge Life
-⭐Sport Sensor Available
-⭐Premium Qulity Item
-⭐Best Controler
-🚛 Free Delivery (COD)
-💳 Bank Payment & Cash on Deliver
-🪀 WhatsApp for more details...
-⭕ 0716389339
-😱 Special Offer!",
+         additionalDescription: "🔥 G9 Gold Ultra 2",
          additionalImages: [
             "https://files.cdn-files-a.com/uploads/9822430/2000_670c970c850a4.jpg",
             "https://example.com/image2.jpg",
