@@ -24,14 +24,13 @@
             <a href="orders.html"><i class="fas fa-truck"></i> Orders</a>
             <div class="user-section">
                 <div id="userInfo" style="display: none;">
-                    <span id="welcomeMessage"></span>
-                    <span id="userEmail"></span>
+                    <!-- Removed welcome message and email display -->
                 </div>
                 <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
-                <a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a>
+
                 <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 <span id="userIcon" style="display: none;">
-                    <i class="fas fa-user-circle" style="font-size: 24px; color: #fff;"></i>
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: #742d2d;"></i>
                 </span>
             </div>
         </nav>
@@ -64,7 +63,7 @@
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
-            autoplaySpeed: 1500 
+            autoplaySpeed: 150 
         });
 
         // Check if user is logged in
@@ -72,12 +71,10 @@
         console.log('User  Email from localStorage:', userEmail); // Debugging line
         if (userEmail) {
             $('#userInfo').show();
-            $('#welcomeMessage').text(`Welcome, ${userEmail}`);
-            $('#userEmail').text(userEmail);
+            $('#userIcon').show(); // Show only the user icon
             $('#loginBtn').hide();
             $('#registerBtn').hide();
             $('#logoutBtn').show();
-            $('#userIcon').show(); // Ensure this line is executed
         } else {
             console.log('User  is not logged in.'); // Debugging line
         }
