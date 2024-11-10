@@ -1,0 +1,58 @@
+/* General Styles for Manage Orders Page */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f4f4f4; /* Light background color */
+}
+
+h2 {
+    color: #742d2d; /* Darker color for headings */
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd; /* Light border for table */
+}
+
+th {
+    background-color: #742d2d; /* Header background color */
+    color: #fff; /* White text for header */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra striping for table rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Highlight on row hover */
+}
+
+/* Button Styles */
+button {
+    background-color: #d9534f; /* Bootstrap danger color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #c9302c; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Smaller font size for smaller screens */
+    }
+}
