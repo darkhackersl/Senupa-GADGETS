@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | MR Gadgets</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <script src="js/jQuery3.4.1.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1><img src="img/icon.png" alt="MR Gadgets Logo" class="logo" height="30px"> MR Gadgets</h1>
+        <nav class="scroll-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-shopping-bag"></i> Products</a>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <a href="track-order.html"><i class="fas fa-truck"></i> Track Order</a>
+            <a href="orders.html"><i class="fas fa-truck"></i> Orders</a>
+            <div class="user-section">
+                <div id="userInfo" style="display: none;"></div>
+                <a href="login.html" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+                <a href="#" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <span id="userIcon" style="display: none;">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: #742d2d;"></i>
+                </span>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <div class="dashboard">
+            <aside class="sidebar">
+                <h2>Dashboard Menu</h2>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                    <li><a href="manage-products.html"><i class="fas fa-box"></i> Manage Products</a></li>
+                    <li><a href="manage-orders.html"><i class="fas fa-shopping-cart"></i> Manage Orders</a></li>
+                    <li><a href="user-settings.html"><i class="fas fa-cog"></i> User Settings</a></li>
+                    <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </aside>
+            <div class="dashboard-content">
+                <h2>Welcome to Your Dashboard</h2>
+                <p>Here you can manage your products, view orders, and update your account settings.</p>
+                <!-- Add more content here as needed -->
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <p>&copy; 2023 MR Gadgets. All rights reserved.</p>
+    </div>
+</footer>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
