@@ -9,7 +9,12 @@ const products = [
         brand: "Apple",
         image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
         description: "Latest iPhone with dynamic island and pro camera system.",
-        stock: 10
+        stock: 10,
+         additionalImages: [
+            "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-7inch-deeppurple?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1663703841896",
+            "https://example.com/image2.jpg",
+            "https://example.com/image3.jpg"
+        ]
     },
     {
         id: 2,
