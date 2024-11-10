@@ -1,15 +1,5 @@
 
 
-.scroll-menu {
-    float: right;
-}
-
-.scroll-menu a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
-}
-
 .scroll-menu a:hover {
     background: #575757;
 }
