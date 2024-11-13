@@ -1015,11 +1015,8 @@ h2 {
         transform: translateX(100%);
         opacity: 0;
     }
-    to ```css
-    {
-        transform: translateX(0);
-        opacity: 1;
-    }
+    
+}
 
 /* Checkout Button Styles */
 .checkout-button {
@@ -1109,4 +1106,7 @@ h2 {
     background-color: #999;
     cursor: not-allowed;
     transform: none;
+}
+.scroll-menu::-webkit-scrollbar { /* WebKit */
+    display: none;
 }
