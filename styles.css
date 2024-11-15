@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://files.cdn-files-a.com/uploads/9822430/2000_670c9232929aa.jpg') no-repeat center center fixed;
+    background-size: cover;
+    animation: backgroundMotion 10s infinite alternate;
+}
+
+.container {
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 1s;
+}
+
+.welcome-text {
+    color: rgb(37, 11, 11);
+    font-size: 3em;
+    animation: textFadeIn 2s forwards;
+    animation-delay: 2s;
+}
+
+.home-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    color: rgb(255, 105, 5);
+    background-color: rgba(255, 255, 255, 0.747);
+    text-decoration: none;
+    border-radius: 5px;
+    opacity: 0;
+    animation: buttonFadeIn 2s forwards;
+    animation-delay: 3s;
+}
+.footer {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(177, 92, 92);
+}
+#credit a::after
+{
+content: "";
+background: rgb(51, 51, 43);
+mix-blend-mode: exclusion;
+width: calc(100% + 18px);
+height: 0;
+position: absolute;
+bottom: -4px;
+left: -10px;
+transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+#credit a:hover::after
+{
+    height: calc(100% + 8px)
+}
+
+
+@keyframes backgroundMotion {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes textFadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes buttonFadeIn {
+    to { opacity: 1; }
+}
