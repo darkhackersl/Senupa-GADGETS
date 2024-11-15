@@ -19,7 +19,7 @@ body {
 }
 
 .welcome-text {
-    color: rgb(37, 11, 11);
+    color: rgb(199, 174, 174);
     font-size: 3em;
     animation: textFadeIn 2s forwards;
     animation-delay: 2s;
