@@ -45,3 +45,4 @@ $(document).ready(function() {
         // You can implement a modal or redirect to a detailed order page
     }
 });
+
